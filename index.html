@@ -31,8 +31,8 @@
     }
 
     .container {
-        width: 90%;
-        max-width: 1050px;
+        width: 95%;
+        max-width: 1200px;
         margin: 30px auto;
         background: #fff;
         padding: 25px;
@@ -44,7 +44,7 @@
         background: #1c7f2e;
         color: #fff;
         padding: 8px;
-        margin-top: 35px;
+        margin-top: 25px;
         font-size: 18px;
         border-radius: 4px;
         cursor: pointer;
@@ -71,18 +71,26 @@
         flex-wrap: wrap;
     }
 
-    .col-3 { width: 24%; }
-    .col-4 { width: 32%; }
+    .col-3 { width: 32%; }
+    .col-4 { width: 24%; }
+    .col-5 { width: 40%; }
     .col-6 { width: 49%; }
+    .col-8 { width: 66%; }
     .col-12 { width: 100%; }
 
-    @media(max-width: 700px){
-        .col-3, .col-4, .col-6 { width: 100%; }
+    @media(max-width: 800px){
+        .col-3, .col-4, .col-5, .col-6, .col-8 { width: 100%; }
     }
 
     .checkbox-group label {
         font-weight: normal;
         margin-right: 18px;
+        display: flex;
+        align-items: center;
+    }
+
+    .checkbox-group label input {
+        margin-right: 6px;
     }
 
     .submit-btn, .action-btn {
@@ -100,19 +108,20 @@
         background: #0a5f1d;
     }
 
-    /* Accordion styling */
     .accordion-content {
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.3s ease;
+        transition: max-height 0.4s ease;
+        padding-top: 0;
+        margin-bottom: 15px;
     }
 
     .accordion-content.active {
-        max-height: 2000px;
+        max-height: 3000px;
         transition: max-height 0.5s ease;
+        padding-top: 15px;
     }
 
-    /* Progress panel */
     .progress-panel {
         display: flex;
         justify-content: space-between;
@@ -178,95 +187,109 @@
     </div>
 
     <!-- Accordion Sections -->
-    <div class="accordion">
+    <!-- 1. Identification -->
+    <h2 class="section-title" onclick="toggleAccordion(this)">1. Identification and Review</h2>
+    <div class="accordion-content">
+        <div class="row">
+            <div class="col-4"><label>CIF Number*</label><input type="text" required></div>
+            <div class="col-4"><label>CNIC/ID Document No.</label><input type="text" disabled></div>
+            <div class="col-4"><label>Date of Review/Update*</label><input type="date" required></div>
+            <div class="col-12"><label>Reason for Updation/Review*</label>
+                <select required>
+                    <option value="">Select Reason</option>
+                    <option value="PeriodicReview">Periodic/Annual CDD Review</option>
+                    <option value="Customer Identity, Address, and Contact Details">Customer Contact Details</option>
+                    <option value="Change of Occupation">Change of Occupation</option>
+                    <option value="IDExpiry">ID Document Expiry/Renewal</option>
+                    <option value="Other">Other Statutory Change</option>
+                    <option value="Next Of Kin Change/Update">Next Of Kin Change/Update</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
-        <h2 class="section-title" onclick="toggleAccordion(this)">1. Identification and Review</h2>
-        <div class="accordion-content">
-            <div class="row">
-                <div class="col-4">
-                    <label>CIF Number*</label>
-                    <input type="text" required>
-                </div>
-                <div class="col-4">
-                    <label>CNIC/ID Document No.</label>
-                    <input type="text" disabled>
-                </div>
-                <div class="col-4">
-                    <label>Date of Review/Update*</label>
-                    <input type="date" required>
-                </div>
-                <div class="col-12">
-                    <label>Reason for Updation/Review*</label>
-                    <select required>
-                        <option value="">Select Reason</option>
-                        <option value="PeriodicReview">Periodic/Annual CDD Review</option>
-                        <option value="Customer Identity, Address, and Contact Details">Customer Contact Details</option>
-                        <option value="Change of Occupation">Change of Occupation</option>
-                        <option value="IDExpiry">ID Document Expiry/Renewal</option>
-                        <option value="Other">Other Statutory Change</option>
-                        <option value="Next Of Kin Change/Update">Next Of Kin Change/Update</option>
-                    </select>
+    <!-- 2. Customer Identity -->
+    <h2 class="section-title" onclick="toggleAccordion(this)">2. Customer Identity, Address, and Contact Details</h2>
+    <div class="accordion-content">
+        <div class="row">
+            <div class="col-6"><label>Full Name (as per ID Document)*</label><input type="text" required></div>
+            <div class="col-6"><label>Father's / Spouse's Name*</label><input type="text" required></div>
+            <div class="col-3"><label>Date of Birth*</label><input type="date" required></div>
+            <div class="col-3"><label>ID Expiry Date*</label><input type="date" required></div>
+            <div class="col-3"><label>Residency Status*</label>
+                <select required><option value="">Select</option><option value="RES">Resident (PK)</option><option value="NRES">Non-Resident (NR)</option></select>
+            </div>
+            <div class="col-3"><label>Gender*</label>
+                <select required><option value="">Select</option><option value="M">Male</option><option value="F">Female</option><option value="O">Other</option></select>
+            </div>
+            <div class="col-6"><label>Current Residential Address*</label><textarea rows="2" required></textarea></div>
+            <div class="col-6"><label>Permanent Address (as per ID)*</label><textarea rows="2" required></textarea></div>
+            <div class="col-6"><label>Primary Contact Number (Mobile)*</label><input type="text" required></div>
+            <div class="col-6"><label>Email Address</label><input type="email"></div>
+        </div>
+    </div>
+
+    <!-- 3. Occupation & Financial -->
+    <h2 class="section-title" onclick="toggleAccordion(this)">3. Occupation, AML/CDD and Financial Profile Update</h2>
+    <div class="accordion-content">
+        <div class="row">
+            <div class="col-6"><label>Occupation/Profession*</label>
+                <select required><option value="">Select</option><option value="Salaried">Salaried</option><option value="SelfEmployed">Self Employed</option><option value="OtherProfession">Other Profession</option></select>
+            </div>
+            <div class="col-6"><label>Source of Income/Funds*</label><input type="text" required></div>
+            <div class="col-6"><label>Employer/Business Name</label><input type="text"></div>
+            <div class="col-8"><label>Occupation/Business Address*</label><textarea rows="2" required></textarea></div>
+            <div class="col-5"><label>Expected Credit Turnover (Amount)*</label><input type="text" required></div>
+            <div class="col-5"><label>Expected Debit Turnover (Amount)*</label><input type="text" required></div>
+            <div class="col-4"><label>New Assigned Customer Risk Profile (CRP)*</label>
+                <select required><option value="">Select</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option></select>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Nominee -->
+    <h2 class="section-title" onclick="toggleAccordion(this)">4. Next of Kin / Nominee Details</h2>
+    <div class="accordion-content">
+        <div class="row">
+            <div class="col-6"><label>Nominee's Full Name*</label><input type="text" required></div>
+            <div class="col-6"><label>Relationship with Nominee*</label><input type="text" required></div>
+            <div class="col-6"><label>Nominee's CNIC/ID Document No.*</label><input type="text" required></div>
+            <div class="col-6"><label>Nominee's Contact Number</label><input type="text"></div>
+            <div class="col-12"><label>Nominee's Address</label><textarea rows="2"></textarea></div>
+        </div>
+    </div>
+
+    <!-- 5. Compliance Screening -->
+    <h2 class="section-title" onclick="toggleAccordion(this)">5. Compliance Screening & Biometric Verification</h2>
+    <div class="accordion-content">
+        <div class="row">
+            <div class="col-6"><button class="action-btn">Run SafeWatch Screening</button></div>
+            <div class="col-6"><label>SafeWatch / Sanction Screening Status</label><input type="text" disabled></div>
+            <div class="col-4 checkbox-group"><label><input type="checkbox"> FATCA</label></div>
+            <div class="col-4 checkbox-group"><label><input type="checkbox"> PEP</label></div>
+            <div class="col-4 checkbox-group"><label><input type="checkbox"> CRS</label></div>
+            <div class="col-12"><label>Special Condition (If Any)</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox"> Photo Holder</label>
+                    <label><input type="checkbox"> Visually Impaired</label>
+                    <label><input type="checkbox"> Deaf & Dumb</label>
+                    <label><input type="checkbox"> Locker Holder</label>
                 </div>
             </div>
         </div>
+    </div>
 
-        <h2 class="section-title" onclick="toggleAccordion(this)">2. Customer Identity, Address, and Contact Details</h2>
-        <div class="accordion-content">
-            <div class="row">
-                <div class="col-6">
-                    <label>Full Name (as per ID Document)*</label>
-                    <input type="text" required>
-                </div>
-                <div class="col-6">
-                    <label>Father's / Spouse's Name*</label>
-                    <input type="text" required>
-                </div>
-                <div class="col-3">
-                    <label>Date of Birth*</label>
-                    <input type="date" required>
-                </div>
-                <div class="col-3">
-                    <label>ID Expiry Date*</label>
-                    <input type="date" required>
-                </div>
-                <div class="col-3">
-                    <label>Residency Status*</label>
-                    <select required>
-                        <option value="">Select</option>
-                        <option value="RES">Resident (PK)</option>
-                        <option value="NRES">Non-Resident (NR)</option>
-                    </select>
-                </div>
-                <div class="col-3">
-                    <label>Gender*</label>
-                    <select required>
-                        <option value="">Select</option>
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
-                        <option value="O">Other</option>
-                    </select>
-                </div>
-                <div class="col-6">
-                    <label>Current Residential Address*</label>
-                    <textarea rows="2" required></textarea>
-                </div>
-                <div class="col-6">
-                    <label>Permanent Address (as per ID)*</label>
-                    <textarea rows="2" required></textarea>
-                </div>
-                <div class="col-6">
-                    <label>Primary Contact Number (Mobile)*</label>
-                    <input type="text" required>
-                </div>
-                <div class="col-6">
-                    <label>Email Address</label>
-                    <input type="email">
-                </div>
-            </div>
+    <!-- 6. Staff Certification -->
+    <h2 class="section-title" onclick="toggleAccordion(this)">6. Staff Certification and Finalization</h2>
+    <div class="accordion-content">
+        <div class="row">
+            <div class="col-8 checkbox-group"><label><input type="checkbox" required> Confirmation of Document Upload/Scanning*</label></div>
+            <div class="col-7 checkbox-group"><label><input type="checkbox" required> All changes confirmed and updated in CBS?</label></div>
+            <div class="col-6"><label>Staff Name / Employee ID</label><input type="text" required></div>
+            <div class="col-6"><label>Approving Authority Name / ID</label><input type="text"></div>
+            <div class="col-6"><button class="action-btn">Biometric Verification</button></div>
+            <div class="col-12"><label>Biometric/ID Verification Status</label><input type="text" disabled></div>
         </div>
-
-        <!-- Add other sections (Occupation, Nominee, Compliance, Staff) similarly -->
-
     </div>
 
     <button class="submit-btn" onclick="submitForm()">Submit and Authorize CIF Record Updation</button>
@@ -279,23 +302,17 @@
         content.classList.toggle("active");
     }
 
-    // Mark progress steps
     const steps = document.querySelectorAll('.progress-step');
     const accordions = document.querySelectorAll('.accordion-content input, .accordion-content select, .accordion-content textarea');
 
-    accordions.forEach(input => {
-        input.addEventListener('input', updateProgress);
-    });
+    accordions.forEach(input => input.addEventListener('input', updateProgress));
 
     function updateProgress() {
         steps.forEach((step, index) => {
             const sectionInputs = document.querySelectorAll(`.accordion-content:nth-of-type(${index+1}) input, .accordion-content:nth-of-type(${index+1}) select, .accordion-content:nth-of-type(${index+1}) textarea`);
             let filled = Array.from(sectionInputs).every(inp => inp.value || inp.checked);
-            if(filled){
-                step.classList.add('completed');
-            } else {
-                step.classList.remove('completed');
-            }
+            if(filled) step.classList.add('completed');
+            else step.classList.remove('completed');
         });
     }
 
