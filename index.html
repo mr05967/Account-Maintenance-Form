@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank AL Habib – Account Opening Form</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        color: #000;
+    }
+
+    /* Header section with gradient green */
+    .header {
+        background: linear-gradient(135deg, #0e8c2d 0%, #0a5f1d 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 28px;
+    }
+
+    .subheader {
+        background: #1c7f2e;
+        color: #fff;
+        padding: 8px 0;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1050px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2.section-title {
+        background: #1c7f2e;
+        color: #fff;
+        padding: 8px;
+        margin-top: 35px;
+        font-size: 18px;
+        border-radius: 4px;
+    }
+
+    label {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 7px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #888;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .row {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .col-3 { width: 24%; }
+    .col-4 { width: 32%; }
+    .col-6 { width: 49%; }
+    .col-12 { width: 100%; }
+
+    @media(max-width: 700px){
+        .col-3, .col-4, .col-6 { width: 100%; }
+    }
+
+    .checkbox-group label {
+        font-weight: normal;
+        margin-right: 18px;
+    }
+
+    .submit-btn {
+        background: #0e8c2d;
+        color: #fff;
+        border: none;
+        padding: 12px 22px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 25px;
+    }
+
+    .submit-btn:hover {
+        background: #0a5f1d;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Top Header -->
+<div class="header">
+    ACCOUNT OPENING FORM
+</div>
+<div class="subheader">
+    For Individuals and Sole Proprietorships
+</div>
+
+<div class="container">
+    <h2 style="color:#0e8c2d; font-size:22px;">Bank AL Habib Limited</h2>
+
+    <!-- Branch & Date -->
+    <div class="row">
+        <div class="col-6">
+            <label>Branch</label>
+            <input type="text">
+        </div>
+        <div class="col-3">
+            <label>Date</label>
+            <input type="date">
+        </div>
+    </div>
+
+    <!-- SECTION: PERSONAL INFORMATION -->
+    <h2 class="section-title">PERSONAL INFORMATION (APPLICANT 1)</h2>
+
+    <div class="row">
+        <div class="col-6">
+            <label>Full Name (as per ID)*</label>
+            <input type="text" required>
+        </div>
+        <div class="col-3">
+            <label>Date of Birth*</label>
+            <input type="date" required>
+        </div>
+        <div class="col-3">
+            <label>Place of Birth</label>
+            <input type="text">
+        </div>
+
+        <div class="col-6">
+            <label>CNIC / SNIC / NICOP*</label>
+            <input type="text" required>
+        </div>
+        <div class="col-3">
+            <label>Date of Issue*</label>
+            <input type="date" required>
+        </div>
+        <div class="col-3">
+            <label>Expiry Date*</label>
+            <input type="date" required>
+        </div>
+
+        <div class="col-6">
+            <label>Father's / Husband's Name*</label>
+            <input type="text" required>
+        </div>
+        <div class="col-6">
+            <label>Mother's Maiden Name*</label>
+            <input type="text" required>
+        </div>
+
+        <div class="col-6">
+            <label>Nationality</label>
+            <input type="text">
+        </div>
+
+        <div class="col-6">
+            <label>U.S. Citizen / Green Card Holder?</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox"> Yes</label>
+                <label><input type="checkbox"> No</label>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label>Permanent Residential Address*</label>
+            <textarea rows="3" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label>Business / Profession</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox"> Salaried</label>
+                <label><input type="checkbox"> Business / Self-Employed</label>
+                <label><input type="checkbox"> Housewife</label>
+                <label><input type="checkbox"> Other</label>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <label>Employer / Business Name</label>
+            <input type="text">
+        </div>
+
+        <div class="col-6">
+            <label>Email Address*</label>
+            <input type="email" required>
+        </div>
+
+        <div class="col-6">
+            <label>Contact Number (Mobile)*</label>
+            <input type="text" required>
+        </div>
+
+        <div class="col-6">
+            <label>Contact Number (Office)</label>
+            <input type="text">
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button class="submit-btn">Submit Form</button>
+
+</div>
+
+</body>
+</html>
