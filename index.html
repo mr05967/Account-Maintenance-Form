@@ -1,132 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Account Maintenance Form</title>
+<meta charset="UTF-8">
+<title>Account Maintenance Form - Bank AL Habib</title>
 
-<style>
-body { font-family: Arial, sans-serif; margin: 20px; }
-
-/* Panels */
-.panel { 
-  border: 1px solid #ccc; 
-  border-radius: 10px; 
-  margin-bottom: 10px; 
-  padding: 15px; 
-}
-.panel h2 { 
-  margin: 0; 
-  cursor: pointer; 
-  font-size: 18px;
-  font-weight: bold;
-}
-.hidden { display: none; }
-
-/* Form Layout */
-.form-row { 
-  display: flex; 
-  gap: 20px; 
-  margin-bottom: 12px; 
-}
-.form-row label { 
-  flex: 1; 
-  font-size: 14px;
-}
-.form-row input, .form-row select {
-  width: 100%;
-  padding: 6px;
-  margin-top: 4px;
-  border-radius: 6px;
-  border: 1px solid #bbb;
-}
-
-/* Multiselect */
-.multiselect { 
-  border: 1px solid #ccc; 
-  padding: 10px; 
-  border-radius: 6px; 
-  width: 250px;
-  background: #fafafa;
-}
-.multiselect label { 
-  display: flex;
-  align-items: center;
-  gap: 8px; 
-  margin-bottom: 6px;
-  font-size: 14px;
-}
-
-/* Checkbox rows (FATCA, PEP, CRS etc.) */
-.checkbox-row { 
-  display: flex; 
-  align-items: center; 
-  gap: 10px; 
-  margin-bottom: 10px; 
-  font-size: 14px;
-}
-.checkbox-row input {
-  transform: scale(1.2);
-}
-
-/* Smooth opening */
-.panel-content {
-  margin-top: 15px;
-}
-</style>
-
-<script>
-window.onload = function() {
-  document.getElementById("p1").classList.remove("hidden");
-};
-
-/* Toggle panel */
-function togglePanel(id){
-  document.getElementById(id).classList.toggle('hidden');
-}
-
-/* Handle multi select logic */
-function handleMultiSelect(){
-  const selectedValues = Array.from(document.querySelectorAll('.ms-opt:checked'))
-    .map(x => x.value);
-
-  // Customer Info visible if any of these selected
-  document.getElementById('panel-customer').style.display =
-    selectedValues.some(v => ['Periodic','Customer','ID Related'].includes(v))
-    ? 'block'
-    : 'none';
-
-  // Occupation visible
-  document.getElementById('panel-occupation').style.display =
-    selectedValues.includes('Occupation') ? 'block' : 'none';
-
-  // Next of kin visible
-  document.getElementById('panel-nok').style.display =
-    selectedValues.includes('Next of Kin') ? 'block' : 'none';
-}
-</script>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
 
 </head>
-
 <body>
 
-<!-- IDENTIFICATION & REVIEW -->
+<h1 class="title">Bank AL Habib – Account Maintenance Form</h1>
+
+<!-- IDENTIFICATION PANEL -->
 <div class="panel">
-  <h2 onclick="togglePanel('p1')">Identification and Review</h2>
-  <div id="p1" class="panel-content hidden">
+  <h2 onclick="togglePanel('p1')">Identification & Review</h2>
+  <div id="p1" class="panel-content">
 
     <div class="form-row">
-      <label>CIF Number:
-        <input type="text" id="cifInput">
+      <label>CIF Number
+        <input type="text" id="cifInput" onblur="loadCustomerData()">
       </label>
 
-      <label>CNIC Number:
-        <input type="text" id="cnicInput">
+      <label>CNIC Number
+        <input type="text" id="cnicInput" onblur="loadCustomerData()">
       </label>
     </div>
 
-    <!-- MULTI SELECT DROPDOWN -->
     <div class="form-row">
-      <label style="flex: none; width: 220px;">Reason for Updation/Review*:</label>
+      <label class="ms-label">Reason for Updation / Review*</label>
 
       <div class="multiselect">
         <label><input type="checkbox" class="ms-opt" value="Periodic" onchange="handleMultiSelect()"> Periodic</label>
@@ -141,66 +43,133 @@ function handleMultiSelect(){
 </div>
 
 
-<!-- CUSTOMER INFORMATION -->
+<!-- CUSTOMER INFO -->
 <div class="panel hidden" id="panel-customer">
   <h2 onclick="togglePanel('p2')">Customer Information</h2>
   <div id="p2" class="panel-content hidden">
 
     <div class="form-row">
-      <label>Customer Name:
-        <input type="text">
+      <label>Customer Name
+        <input type="text" id="custName">
       </label>
-      <label>Father Name:
-        <input type="text">
+      <label>Father Name
+        <input type="text" id="fatherName">
       </label>
     </div>
 
     <div class="form-row">
-      <label>Date of Birth:
-        <input type="date">
+      <label>Date of Birth
+        <input type="date" id="dob">
       </label>
-      <label>Mobile Number:
-        <input type="text">
+      <label>Mobile Number
+        <input type="text" id="mobile">
       </label>
     </div>
-
   </div>
 </div>
 
 
-<!-- OCCUPATION INFO -->
+<!-- OCCUPATION -->
 <div class="panel hidden" id="panel-occupation">
-  <h2 onclick="togglePanel('p3')">Occupation Details</h2>
+  <h2 onclick="togglePanel('p3')">Occupation Information</h2>
   <div id="p3" class="panel-content hidden">
 
     <div class="form-row">
-      <label>Occupation Type:
-        <input type="text">
+      <label>Occupation Type
+        <input type="text" id="occType">
       </label>
-      <label>Employer / Business:
-        <input type="text">
+      <label>Employer / Business
+        <input type="text" id="employer">
       </label>
     </div>
-
   </div>
 </div>
 
 
 <!-- NEXT OF KIN -->
 <div class="panel hidden" id="panel-nok">
-  <h2 onclick="togglePanel('p4')">Next of Kin Information</h2>
+  <h2 onclick="togglePanel('p4')">Next of Kin</h2>
   <div id="p4" class="panel-content hidden">
 
     <div class="form-row">
-      <label>NOK Name:
-        <input type="text">
+      <label>NOK Name
+        <input type="text" id="nokName">
       </label>
-      <label>NOK Contact:
-        <input type="text">
+      <label>NOK Contact
+        <input type="text" id="nokContact">
       </label>
     </div>
 
   </div>
+</div>
+
+
+
+<!-- ALWAYS ACTIVE TABS -->
+
+<!-- COMPLIANCE -->
+<div class="panel" id="panel-compliance">
+  <h2 onclick="togglePanel('p5')">Compliance</h2>
+  <div id="p5" class="panel-content hidden">
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="fatca">
+      <label for="fatca">FATCA</label>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="pep">
+      <label for="pep">PEP</label>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="crs">
+      <label for="crs">CRS</label>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- BIOMETRIC -->
+<div class="panel" id="panel-biometric">
+  <h2 onclick="togglePanel('p6')">Biometric Verification</h2>
+  <div id="p6" class="panel-content hidden">
+
+    <div class="form-row">
+      <label>Biometric Status
+        <select id="bioStatus">
+          <option>Verified</option>
+          <option>Not Verified</option>
+          <option>Failed</option>
+        </select>
+      </label>
+
+      <label>Verification Date
+        <input type="date" id="bioDate">
+      </label>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- OTHER / SPECIAL CONDITIONS -->
+<div class="panel" id="panel-other">
+  <h2 onclick="togglePanel('p7')">Other / Special Conditions</h2>
+  <div id="p7" class="panel-content hidden">
+
+    <label>Special Condition (If Any)
+      <textarea id="special" rows="4" style="width:100%"></textarea>
+    </label>
+
+  </div>
+</div>
+
+
+<!-- SUBMIT BUTTON -->
+<div class="submit-area">
+  <button class="btn-submit">Submit Form</button>
 </div>
 
 </body>
