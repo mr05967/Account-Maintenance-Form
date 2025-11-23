@@ -1,94 +1,83 @@
-// Auto-open first panel on load
+// Auto-open first panel
 window.onload = function () {
-    const firstPanel = document.getElementById("p1");
-    if (firstPanel) firstPanel.classList.remove("hidden");
+    document.getElementById("p1").classList.remove("hidden");
 };
 
-// Panel toggle function
+/* ---------------------------
+   PANEL TOGGLE
+----------------------------- */
 function togglePanel(id) {
-    const panel = document.getElementById(id);
-    if (panel) panel.classList.toggle("hidden");
+    document.getElementById(id).classList.toggle("hidden");
 }
 
-// Multiselect behavior
+/* ---------------------------
+   MULTISELECT LOGIC
+----------------------------- */
 function handleMultiSelect() {
-    const selectedValues = Array.from(document.querySelectorAll(".ms-opt:checked")).map(
-        (x) => x.value
-    );
+    const selected = Array.from(document.querySelectorAll(".ms-opt:checked"))
+        .map(x => x.value);
 
-    // Customer Information panel
+    // Customer Section
     document.getElementById("panel-customer").style.display =
-        selectedValues.some((v) => ["Periodic", "Customer", "ID Related"].includes(v))
+        selected.some(v => ["Periodic", "Customer", "ID Related"].includes(v))
             ? "block"
             : "none";
 
-    // Occupation panel
-    document.getElementById("panel-occupation").style.display = selectedValues.includes(
-        "Occupation"
-    )
-        ? "block"
-        : "none";
+    // Occupation
+    document.getElementById("panel-occupation").style.display =
+        selected.includes("Occupation") ? "block" : "none";
 
-    // Next of Kin panel
-    document.getElementById("panel-nok").style.display = selectedValues.includes(
-        "Next of Kin"
-    )
-        ? "block"
-        : "none";
+    // Next of Kin
+    document.getElementById("panel-nok").style.display =
+        selected.includes("Next of Kin") ? "block" : "none";
 }
 
-// Reading customer info from DB file (JSON)
-async function loadCustomerData(identifier) {
+/* ---------------------------
+   LOAD DATA FROM DATABASE.JSON
+----------------------------- */
+async function fetchCustomerData(identifier) {
     try {
-        const response = await fetch("database.json"); // File you'll upload
-        const data = await response.json();
+        const res = await fetch("database.json");
+        const data = await res.json();
 
-        // Match by CIF or CNIC
-        const record = data.find(
-            (item) => item.cif == identifier || item.cnic == identifier
-        );
+        let record =
+            data.find(x => x.cif === identifier) ||
+            data.find(x => x.cnic === identifier);
 
-        if (!record) return;
-
-        // AUTO-FILL fields
-        if (record.customerName)
-            document.getElementById("customerName").value = record.customerName;
-
-        if (record.fatherName)
-            document.getElementById("fatherName").value = record.fatherName;
-
-        if (record.dob)
-            document.getElementById("dob").value = record.dob;
-
-        if (record.mobile)
-            document.getElementById("mobile").value = record.mobile;
-
-        if (record.occupation)
-            document.getElementById("occupation").value = record.occupation;
-
-        if (record.employer)
-            document.getElementById("employer").value = record.employer;
-
-        if (record.nokName)
-            document.getElementById("nokName").value = record.nokName;
-
-        if (record.nokContact)
-            document.getElementById("nokContact").value = record.nokContact;
-    } catch (error) {
-        console.error("Error reading database:", error);
+        return record || null;
+    } catch (err) {
+        console.error("Error reading DB file:", err);
+        return null;
     }
 }
 
-// Add listeners to fields for search
-document.addEventListener("DOMContentLoaded", () => {
-    const cifField = document.getElementById("cifInput");
-    const cnicField = document.getElementById("cnicInput");
+/* ---------------------------
+   POPULATE FORM WHEN USER ENTERS CIF/CNIC
+----------------------------- */
+async function handleSearch() {
+    const cif = document.getElementById("cifInput").value.trim();
+    const cnic = document.getElementById("cnicInput").value.trim();
 
-    if (cifField) {
-        cifField.addEventListener("change", () => loadCustomerData(cifField.value));
+    if (!cif && !cnic) return;
+
+    let record = await fetchCustomerData(cif || cnic);
+
+    if (!record) {
+        alert("No record found!");
+        return;
     }
 
-    if (cnicField) {
-        cnicField.addEventListener("change", () => loadCustomerData(cnicField.value));
-    }
-});
+    // Fill customer information
+    document.querySelector("#panel-customer input[name='customerName']").value = record.name;
+    document.querySelector("#panel-customer input[name='fatherName']").value = record.father;
+    document.querySelector("#panel-customer input[name='dob']").value = record.dob;
+    document.querySelector("#panel-customer input[name='mobile']").value = record.mobile;
+
+    // Fill occupation data
+    document.querySelector("#panel-occupation input[name='occupation']").value = record.occupation;
+    document.querySelector("#panel-occupation input[name='employer']").value = record.employer;
+
+    // Fill next of kin data
+    document.querySelector("#panel-nok input[name='nokName']").value = record.nok_name;
+    document.querySelector("#panel-nok input[name='nokContact']").value = record.nok_contact;
+}
