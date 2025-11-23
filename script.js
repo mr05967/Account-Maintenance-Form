@@ -1,61 +1,94 @@
-// Smooth scroll to top when form is submitted
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+// Auto-open first panel on load
+window.onload = function () {
+    const firstPanel = document.getElementById("p1");
+    if (firstPanel) firstPanel.classList.remove("hidden");
+};
+
+// Panel toggle function
+function togglePanel(id) {
+    const panel = document.getElementById(id);
+    if (panel) panel.classList.toggle("hidden");
 }
 
-// Show success message after form submission
-function showSuccessMessage() {
-  const msg = document.createElement("div");
-  msg.innerText = "Your Account Maintenance Request has been submitted successfully.";
-  msg.style.position = "fixed";
-  msg.style.top = "20px";
-  msg.style.left = "50%";
-  msg.style.transform = "translateX(-50%)";
-  msg.style.padding = "15px 25px";
-  msg.style.background = "#0d5e24";
-  msg.style.color = "white";
-  msg.style.borderRadius = "6px";
-  msg.style.fontSize = "16px";
-  msg.style.boxShadow = "0 3px 10px rgba(0,0,0,0.3)";
-  msg.style.zIndex = "9999";
+// Multiselect behavior
+function handleMultiSelect() {
+    const selectedValues = Array.from(document.querySelectorAll(".ms-opt:checked")).map(
+        (x) => x.value
+    );
 
-  document.body.appendChild(msg);
+    // Customer Information panel
+    document.getElementById("panel-customer").style.display =
+        selectedValues.some((v) => ["Periodic", "Customer", "ID Related"].includes(v))
+            ? "block"
+            : "none";
 
-  setTimeout(() => {
-    msg.remove();
-  }, 3000);
+    // Occupation panel
+    document.getElementById("panel-occupation").style.display = selectedValues.includes(
+        "Occupation"
+    )
+        ? "block"
+        : "none";
+
+    // Next of Kin panel
+    document.getElementById("panel-nok").style.display = selectedValues.includes(
+        "Next of Kin"
+    )
+        ? "block"
+        : "none";
 }
 
-// Validate required fields
-function validateForm() {
-  let valid = true;
-  const requiredFields = document.querySelectorAll("input, textarea, select");
+// Reading customer info from DB file (JSON)
+async function loadCustomerData(identifier) {
+    try {
+        const response = await fetch("database.json"); // File you'll upload
+        const data = await response.json();
 
-  requiredFields.forEach(field => {
-    if (!field.value.trim()) {
-      field.style.border = "2px solid red";
-      valid = false;
-    } else {
-      field.style.border = "1px solid #a5c9a5";
+        // Match by CIF or CNIC
+        const record = data.find(
+            (item) => item.cif == identifier || item.cnic == identifier
+        );
+
+        if (!record) return;
+
+        // AUTO-FILL fields
+        if (record.customerName)
+            document.getElementById("customerName").value = record.customerName;
+
+        if (record.fatherName)
+            document.getElementById("fatherName").value = record.fatherName;
+
+        if (record.dob)
+            document.getElementById("dob").value = record.dob;
+
+        if (record.mobile)
+            document.getElementById("mobile").value = record.mobile;
+
+        if (record.occupation)
+            document.getElementById("occupation").value = record.occupation;
+
+        if (record.employer)
+            document.getElementById("employer").value = record.employer;
+
+        if (record.nokName)
+            document.getElementById("nokName").value = record.nokName;
+
+        if (record.nokContact)
+            document.getElementById("nokContact").value = record.nokContact;
+    } catch (error) {
+        console.error("Error reading database:", error);
     }
-  });
-
-  return valid;
 }
 
-// Attach to submit button
+// Add listeners to fields for search
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.querySelector("button");
+    const cifField = document.getElementById("cifInput");
+    const cnicField = document.getElementById("cnicInput");
 
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      alert("Please fill all fields before submitting.");
-      return;
+    if (cifField) {
+        cifField.addEventListener("change", () => loadCustomerData(cifField.value));
     }
 
-    showSuccessMessage();
-    scrollToTop();
-  });
+    if (cnicField) {
+        cnicField.addEventListener("change", () => loadCustomerData(cnicField.value));
+    }
 });
