@@ -1,0 +1,38 @@
+[
+  {
+    "cif": "345678",
+    "cnic": "42201-1234567-1",
+    "name": "Ahmed Raza",
+    "father": "Muhammad Raza",
+    "dob": "1994-07-15",
+    "mobile": "0300-1234567",
+    "occupation": "Software Engineer",
+    "employer": "ABC Tech Pvt Ltd",
+    "nok_name": "Ali Raza",
+    "nok_contact": "0311-9876543"
+  },
+  {
+    "cif": "987654",
+    "cnic": "42101-9876543-2",
+    "name": "Sara Khan",
+    "father": "Nadeem Khan",
+    "dob": "1998-12-20",
+    "mobile": "0321-5556677",
+    "occupation": "Teacher",
+    "employer": "The City School",
+    "nok_name": "Aisha Khan",
+    "nok_contact": "0302-2233445"
+  },
+  {
+    "cif": "111111",
+    "cnic": "42201-1249486-7",
+    "name": "Mehdi Raza",
+    "father": "Mehboob Ali",
+    "dob": "2000-05-17",
+    "mobile": "0332-6676671",
+    "occupation": "Developer",
+    "employer": "Bank AL Habib Limited",
+    "nok_name": "Ali Khan",
+    "nok_contact": "0302-2233445"
+  }
+]
