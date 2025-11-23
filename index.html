@@ -1,176 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Account Maintenance Form - Bank AL Habib</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bank AL Habib — Customer Record Updation</title>
 
-<link rel="stylesheet" href="style.css">
-<script src="script.js" defer></script>
+<style>
+  :root{
+    --brand-dark:#0a5f1d;
+    --brand:#0e8c2d;
+    --muted:#6b6b6b;
+    --panel-bg:#ffffff;
+    --radius:10px;
+    --gap:16px;
+  }
+  body{
+    margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    background: #f3f6f4; color:#111;
+  }
 
+  /* Header */
+  .topbar{
+    background: linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);
+    color: #fff; padding:22px 18px; text-align:center;
+  }
+  .topbar h1{ margin:0; font-size:20px; letter-spacing:0.2px; }
+  .topbar p{ margin:6px 0 0; opacity:0.95; font-size:13px; }
+
+  /* container */
+  .wrap{ max-width:1180px; margin:20px auto; padding:18px; }
+  .card{ background:var(--panel-bg); border-radius:var(--radius); box-shadow:0 6px 22px rgba(6,20,10,0.06); padding:20px; }
+
+  /* file loader row */
+  .loader-row{ display:flex; gap:var(--gap); align-items:center; margin-bottom:18px; flex-wrap:wrap; }
+  .loader-row label{ font-weight:600; color:var(--muted); }
+
+  /* accordion header */
+  .section{
+    margin-bottom:12px; border-radius:8px; overflow:hidden; border:1px solid rgba(8,40,12,0.06);
+  }
+  .section-header{
+    background: linear-gradient(180deg, #f7fbf8, #eef7ee);
+    padding:12px 16px; cursor:pointer; display:flex; align-items:center; justify-content:space-between;
+  }
+  .section-header .title{ font-weight:700; color:var(--brand-dark); }
+  .section-header .meta{ color:var(--muted); font-size:13px; }
+
+  .section-body{ padding:14px 16px; display:none; background:#fff; border-top:1px solid rgba(0,0,0,0.03); }
+  .section-body.open{ display:block; }
+
+  /* form layout rows */
+  .row{ display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+  .col{ flex:1; min-width: 220px; }
+  label.field-label{ display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#1f3a1f; }
+  input[type="text"], input[type="date"], input[type="email"], textarea, select {
+    width:100%; padding:9px 10px; border-radius:8px; border:1px solid #d0d7d0; font-size:14px; background:#fff;
+  }
+  textarea{ min-height:70px; resize:vertical; }
+
+  /* multiselect checkbox list */
+  .multiselect{ border:1px solid #e6eee6; background:#fbfdfb; padding:10px; border-radius:8px; display:flex; flex-direction:column; gap:6px; width:320px; }
+  .ms-item{ display:flex; gap:8px; align-items:center; }
+  .ms-item input[type="checkbox"]{ transform:scale(1.05); margin-left:2px; }
+
+  /* checkbox group vertical */
+  .vcheck{ display:flex; flex-direction:column; gap:8px; }
+  .vcheck label{ display:flex; gap:10px; align-items:center; font-size:14px; color:#1f3a1f; }
+
+  /* special condition checkboxes */
+  .special-list{ display:flex; flex-wrap:wrap; gap:12px; }
+
+  /* fingerprint button */
+  .fingerprint-btn{
+    display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px;
+    border:1px dashed rgba(10,95,29,0.12); background:#f7fbf7; color:var(--brand-dark); cursor:pointer; font-weight:600;
+  }
+  .fingerprint-ico{
+    width:36px; height:36px; border-radius:8px; display:inline-grid; place-items:center; background:linear-gradient(180deg,#e9f6e9,#ffffff);
+    box-shadow:0 3px 8px rgba(12,60,20,0.06);
+  }
+
+  /* action row */
+  .actions{ display:flex; gap:12px; justify-content:flex-end; margin-top:18px; flex-wrap:wrap; }
+  .btn{
+    background:var(--brand); color:#fff; padding:10px 16px; border-radius:8px; border:none; cursor:pointer; font-weight:700;
+  }
+  .btn.ghost{ background:#fff; color:var(--brand); border:1px solid rgba(14,140,45,0.12); }
+
+  /* responsive tweaks */
+  @media(max-width:880px){
+    .multiselect{ width:100%; }
+    .row{ flex-direction:column; }
+    .vcheck{ flex-direction:column; }
+  }
+
+  /* subtle form field labels for disabled */
+  input[disabled], textarea[disabled] { background:#f4f6f4; color:#6b6b6b; }
+
+  /* small helper */
+  .hint{ font-size:12px; color:var(--muted); margin-top:6px; }
+</style>
 </head>
 <body>
+  <div class="topbar">
+    <h1>CBS Customer Record Updation</h1>
+    <p>Bank AL Habib Limited — Account Maintenance</p>
+  </div>
 
-<h1 class="title">Bank AL Habib – Account Maintenance Form</h1>
+  <div class="wrap">
+    <div class="card">
 
-<!-- IDENTIFICATION PANEL -->
-<div class="panel">
-  <h2 onclick="togglePanel('p1')">Identification & Review</h2>
-  <div id="p1" class="panel-content">
-
-    <div class="form-row">
-      <label>CIF Number
-        <input type="text" id="cifInput" onblur="loadCustomerData()">
-      </label>
-
-      <label>CNIC Number
-        <input type="text" id="cnicInput" onblur="loadCustomerData()">
-      </label>
-    </div>
-
-    <div class="form-row">
-      <label class="ms-label">Reason for Updation / Review*</label>
-
-      <div class="multiselect">
-        <label><input type="checkbox" class="ms-opt" value="Periodic" onchange="handleMultiSelect()"> Periodic</label>
-        <label><input type="checkbox" class="ms-opt" value="Customer" onchange="handleMultiSelect()"> Customer Request</label>
-        <label><input type="checkbox" class="ms-opt" value="ID Related" onchange="handleMultiSelect()"> ID Related Update</label>
-        <label><input type="checkbox" class="ms-opt" value="Occupation" onchange="handleMultiSelect()"> Occupation Change</label>
-        <label><input type="checkbox" class="ms-opt" value="Next of Kin" onchange="handleMultiSelect()"> Next of Kin Update</label>
+      <!-- file loader -->
+      <div class="loader-row">
+        <label for="dataFile">Load dataset (JSON):</label>
+        <input id="dataFile" type="file" accept="application/json" />
+        <div class="hint">Load a JSON file containing an array of customer objects. When CIF or CNIC is typed the form will try to auto-populate.</div>
       </div>
-    </div>
 
+      <!-- IDENTIFICATION (auto-open) -->
+      <div class="section" id="sec-ident">
+        <div class="section-header" onclick="toggleSection('sec-ident')">
+          <div>
+            <span class="title">Identification and Review</span>
+            <div class="meta">Lookup CIF / CNIC — select reason(s) to enable relevant sections</div>
+          </div>
+          <div class="meta">Auto-open</div>
+        </div>
+
+        <div class="section-body open" id="sec-ident-body">
+
+          <div class="row">
+            <div class="col">
+              <label class="field-label">CIF Number (######)</label>
+              <input id="cif" type="text" maxlength="6" placeholder="6 digits" />
+              <div class="hint">Numeric only — 6 digits</div>
+            </div>
+
+            <div class="col">
+              <label class="field-label">CNIC / ID Document No. (#####-#######-#)</label>
+              <input id="cnic" type="text" maxlength="15" placeholder="12345-1234567-1" />
+              <div class="hint">Dashes are auto-inserted while typing</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:none;width:220px;">
+              <label class="field-label">Reason for Updation/Review*</label>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">(select one or more)</div>
+            </div>
+
+            <div class="multiselect" aria-label="Reason multiselect">
+              <label class="ms-item"><input class="ms-opt" type="checkbox" value="Periodic" />Periodic/Annual CDD Review</label>
+              <label class="ms-item"><input class="ms-opt" type="checkbox" value="Customer" />Customer Contact Details</label>
+              <label class="ms-item"><input class="ms-opt" type="checkbox" value="IDExpiry" />ID Document Expiry/Renewal</label>
+              <label class="ms-item"><input class="ms-opt" type="checkbox" value="Occupation" />Change of Occupation</label>
+              <label class="ms-item"><input class="ms-opt" type="checkbox" value="NextOfKin" />Next Of Kin Change/Update</label>
+              <label class="ms-item"><input class="ms-opt" type="checkbox" value="Other" />Other Statutory Change</label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CUSTOMER INFO (appears if relevant reasons selected) -->
+      <div class="section" id="sec-customer" style="display:none;">
+        <div class="section-header" onclick="toggleSection('sec-customer')">
+          <div>
+            <span class="title">Customer Identity, Address & Contact Details</span>
+            <div class="meta">Full identity & contact info</div>
+          </div>
+          <div class="meta">Includes FATCA / PEP / CRS</div>
+        </div>
+
+        <div class="section-body" id="sec-customer-body">
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Full Name (as per ID Document)*</label>
+              <input id="customerFullName" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Father's / Spouse's Name*</label>
+              <input id="parentSpouseName" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Date of Birth*</label>
+              <input id="dateOfBirth" type="date" />
+            </div>
+            <div class="col">
+              <label class="field-label">ID Expiry Date*</label>
+              <input id="idExpiryDate" type="date" />
+            </div>
+            <div class="col">
+              <label class="field-label">Residency Status*</label>
+              <select id="residencyStatus"><option value="">Select</option><option value="RES">Resident (PK)</option><option value="NRES">Non-Resident (NR)</option></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Gender*</label>
+              <select id="gender"><option value="">Select</option><option value="M">Male</option><option value="F">Female</option><option value="O">Other</option></select>
+            </div>
+            <div class="col">
+              <label class="field-label">Primary Contact Number (Mobile)*</label>
+              <input id="primaryContactNumber" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Email Address</label>
+              <input id="emailAddress" type="email" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Current Residential Address*</label>
+              <textarea id="residentialAddress"></textarea>
+            </div>
+            <div class="col">
+              <label class="field-label">Permanent Address (as per ID)*</label>
+              <textarea id="permanentAddress"></textarea>
+            </div>
+          </div>
+
+          <div style="margin-top:10px;">
+            <div class="field-label" style="font-weight:700;margin-bottom:8px;color:var(--muted);">Regulatory Declarations</div>
+            <div class="vcheck">
+              <label><input id="fatca" type="checkbox" /> FATCA</label>
+              <label><input id="crs" type="checkbox" /> CRS</label>
+              <label><input id="pep" type="checkbox" /> PEP</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OCCUPATION (appears if Occupation selected) -->
+      <div class="section" id="sec-occupation" style="display:none;">
+        <div class="section-header" onclick="toggleSection('sec-occupation')">
+          <div>
+            <span class="title">Occupation, AML/CDD & Financial Profile</span>
+            <div class="meta">Occupation, income source, turnover & risk</div>
+          </div>
+          <div class="meta"></div>
+        </div>
+
+        <div class="section-body" id="sec-occupation-body">
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Occupation/Profession*</label>
+              <select id="occupationType">
+                <option value="">Select</option>
+                <option value="Salaried">Salaried</option>
+                <option value="SelfEmployed">Self Employed</option>
+                <option value="OtherProfession">Other Profession</option>
+              </select>
+            </div>
+            <div class="col">
+              <label class="field-label">Source of Income / Funds*</label>
+              <input id="sourceOfFundsDescription" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Employer / Business Name</label>
+              <input id="employerBusinessName" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Occupation / Business Address*</label>
+              <textarea id="occupationAddress"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Expected Credit Turnover (Amount)*</label>
+              <input id="expectedCreditAmount" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Expected Debit Turnover (Amount)*</label>
+              <input id="expectedDebitAmount" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">New Assigned Customer Risk Profile (CRP)*</label>
+              <select id="newRiskClassification"><option value="">Select</option><option>Low</option><option>Medium</option><option>High</option></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEXT OF KIN (appears if NextOfKin selected) -->
+      <div class="section" id="sec-nok" style="display:none;">
+        <div class="section-header" onclick="toggleSection('sec-nok')">
+          <div>
+            <span class="title">Next of Kin / Nominee Details</span>
+            <div class="meta">Nominee information</div>
+          </div>
+          <div class="meta"></div>
+        </div>
+
+        <div class="section-body" id="sec-nok-body">
+          <div class="row">
+            <div class="col"><label class="field-label">Nominee's Full Name*</label><input id="nomineeFullName" type="text" /></div>
+            <div class="col"><label class="field-label">Relationship with Nominee*</label><input id="nomineeRelationship" type="text" /></div>
+          </div>
+          <div class="row">
+            <div class="col"><label class="field-label">Nominee's CNIC/ID Document No.*</label><input id="nomineeCNIC" type="text" /></div>
+            <div class="col"><label class="field-label">Nominee's Contact Number</label><input id="nomineeContact" type="text" /></div>
+          </div>
+          <div class="row">
+            <div class="col"><label class="field-label">Nominee's Address</label><textarea id="nomineeAddress"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPECIAL / OTHER CONDITIONS (always visible) -->
+      <div class="section" id="sec-special">
+        <div class="section-header" onclick="toggleSection('sec-special')">
+          <div>
+            <span class="title">Other / Special Conditions</span>
+            <div class="meta">Any special flags (Photo holder, Visually impaired, etc.)</div>
+          </div>
+          <div class="meta"></div>
+        </div>
+
+        <div class="section-body" id="sec-special-body">
+          <div class="special-list">
+            <label><input type="checkbox" id="special_photo" /> Photo Holder</label>
+            <label><input type="checkbox" id="special_vis" /> Visually Impaired</label>
+            <label><input type="checkbox" id="special_deaf" /> Deaf & Dumb</label>
+            <label><input type="checkbox" id="special_locker" /> Locker Holder</label>
+          </div>
+          <div class="hint" style="margin-top:10px;">Select any special condition(s) that apply</div>
+        </div>
+      </div>
+
+      <!-- BIOMETRIC (after special) -->
+      <div class="section" id="sec-biometric">
+        <div class="section-header" onclick="toggleSection('sec-biometric')">
+          <div>
+            <span class="title">Biometric Verification</span>
+            <div class="meta">Resident customers require ID verification</div>
+          </div>
+          <div class="meta">Status: <span id="biometricStatusText">Not Verified</span></div>
+        </div>
+
+        <div class="section-body" id="sec-biometric-body">
+          <div class="row" style="align-items:center;">
+            <div style="flex:none;">
+              <button id="fingerBtn" class="fingerprint-btn" title="Fingerprint (demo)">
+                <span class="fingerprint-ico">🔒</span>
+                <span>Scan Fingerprint</span>
+              </button>
+            </div>
+            <div style="flex:1;">
+              <div class="hint">Fingerprint scan button is decorative in this demo. Biometric status updates only if loaded from dataset.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <label class="field-label">Biometric/ID Verification Status</label>
+            <input id="biometricReVerifiedStatus" type="text" disabled placeholder="SUCCESS / NOT VERIFIED" />
+            <div class="hint">This field is read-only; in live system it's populated from biometric system</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAFF CERTIFICATION / FINALIZATION -->
+      <div class="section" id="sec-staff">
+        <div class="section-header" onclick="toggleSection('sec-staff')">
+          <div>
+            <span class="title">Staff Certification & Finalization (Audit Trail)</span>
+            <div class="meta">Document upload confirmation & staff IDs</div>
+          </div>
+          <div class="meta"></div>
+        </div>
+
+        <div class="section-body" id="sec-staff-body">
+          <div class="row">
+            <div class="col">
+              <label class="field-label"><input id="documentUploadConfirmed" type="checkbox" /> Confirmation of Document Upload/Scanning*</label>
+            </div>
+            <div class="col">
+              <label class="field-label"><input id="coreSystemUpdated" type="checkbox" /> All changes confirmed and updated in CBS?</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col"><label class="field-label">Staff Name / Employee ID</label><input id="staffId" type="text" /></div>
+            <div class="col"><label class="field-label">Approving Authority Name / ID</label><input id="approverId" type="text" /></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- actions -->
+      <div class="actions">
+        <button class="btn ghost" id="clearBtn">Clear</button>
+        <button class="btn" id="submitBtn">Submit and Authorize CIF Record Updation</button>
+      </div>
+
+    </div>
   </div>
-</div>
 
+<script>
+/* ---------- Utilities & State ---------- */
+let dataset = []; // loaded customer records
 
-<!-- CUSTOMER INFO -->
-<div class="panel hidden" id="panel-customer">
-  <h2 onclick="togglePanel('p2')">Customer Information</h2>
-  <div id="p2" class="panel-content hidden">
+// map input ids to dataset keys (accepts Camunda JSON-like keys)
+const fieldsMap = {
+  cifNumber: 'cif', idNumber: 'cnic',
+  customerFullName: 'customerFullName',
+  parentSpouseName:'parentSpouseName',
+  dateOfBirth:'dateOfBirth',
+  idExpiryDate:'idExpiryDate',
+  residencyStatus:'residencyStatus',
+  gender:'gender',
+  residentialAddress:'residentialAddress',
+  permanentAddress:'permanentAddress',
+  primaryContactNumber:'primaryContactNumber',
+  emailAddress:'emailAddress',
+  occupationType:'occupationType',
+  sourceOfFundsDescription:'sourceOfFundsDescription',
+  employerBusinessName:'employerBusinessName',
+  occupationAddress:'occupationAddress',
+  expectedCreditAmount:'expectedCreditAmount',
+  expectedDebitAmount:'expectedDebitAmount',
+  newRiskClassification:'newRiskClassification',
+  nomineeFullName:'nomineeFullName',
+  nomineeRelationship:'nomineeRelationship',
+  nomineeCNIC:'nomineeCNIC',
+  nomineeContact:'nomineeContact',
+  nomineeAddress:'nomineeAddress',
+  biometricReVerifiedStatus:'biometricReVerifiedStatus',
+  staffId:'staffId', approverId:'approverId'
+};
 
-    <div class="form-row">
-      <label>Customer Name
-        <input type="text" id="custName">
-      </label>
-      <label>Father Name
-        <input type="text" id="fatherName">
-      </label>
-    </div>
+/* ---------- Section toggles ---------- */
+function toggleSection(id){
+  const sec = document.getElementById(id);
+  const body = sec.querySelector('.section-body');
+  body.classList.toggle('open');
+}
 
-    <div class="form-row">
-      <label>Date of Birth
-        <input type="date" id="dob">
-      </label>
-      <label>Mobile Number
-        <input type="text" id="mobile">
-      </label>
-    </div>
-  </div>
-</div>
+/* ---------- Multi-select handling ---------- */
+function updateVisibleSections(){
+  const checked = Array.from(document.querySelectorAll('.ms-opt:checked')).map(n=>n.value);
+  // Customer visible if Periodic / Customer / IDExpiry selected
+  const showCustomer = checked.some(v=>['Periodic','Customer','IDExpiry'].includes(v));
+  document.getElementById('sec-customer').style.display = showCustomer ? 'block' : 'none';
+  // Occupation
+  document.getElementById('sec-occupation').style.display = checked.includes('Occupation') ? 'block' : 'none';
+  // Next of Kin
+  document.getElementById('sec-nok').style.display = checked.includes('NextOfKin') ? 'block' : 'none';
+}
 
+/* attach handlers to multiselect options */
+document.querySelectorAll('.ms-opt').forEach(cb=>{
+  cb.addEventListener('change', updateVisibleSections);
+});
 
-<!-- OCCUPATION -->
-<div class="panel hidden" id="panel-occupation">
-  <h2 onclick="togglePanel('p3')">Occupation Information</h2>
-  <div id="p3" class="panel-content hidden">
+/* ---------- CNIC & CIF formatting ---------- */
+const cnicInput = document.getElementById('cnic');
+const cifInput = document.getElementById('cif');
 
-    <div class="form-row">
-      <label>Occupation Type
-        <input type="text" id="occType">
-      </label>
-      <label>Employer / Business
-        <input type="text" id="employer">
-      </label>
-    </div>
-  </div>
-</div>
+function onlyDigits(str){ return (str || '').replace(/\D/g,''); }
 
+cnicInput.addEventListener('input', function(e){
+  const digits = onlyDigits(this.value).slice(0,13); // 13 digits total for CNIC
+  let out = '';
+  if(digits.length <=5) out = digits;
+  else if(digits.length <=12) out = digits.slice(0,5) + '-' + digits.slice(5);
+  else out = digits.slice(0,5) + '-' + digits.slice(5,12) + '-' + digits.slice(12);
+  this.value = out;
+});
 
-<!-- NEXT OF KIN -->
-<div class="panel hidden" id="panel-nok">
-  <h2 onclick="togglePanel('p4')">Next of Kin</h2>
-  <div id="p4" class="panel-content hidden">
+cifInput.addEventListener('input', function(e){
+  const digits = onlyDigits(this.value).slice(0,6);
+  this.value = digits;
+});
 
-    <div class="form-row">
-      <label>NOK Name
-        <input type="text" id="nokName">
-      </label>
-      <label>NOK Contact
-        <input type="text" id="nokContact">
-      </label>
-    </div>
+/* ---------- File loader: accept JSON array ---------- */
+document.getElementById('dataFile').addEventListener('change', function(ev){
+  const f = ev.target.files && ev.target.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = function(){ try{
+      const parsed = JSON.parse(r.result);
+      if(Array.isArray(parsed)){
+        dataset = parsed;
+        alert('Dataset loaded: '+dataset.length+' records');
+      } else {
+        alert('JSON must be an array of objects.');
+      }
+    } catch(err){ alert('Invalid JSON: '+err.message); }
+  };
+  r.readAsText(f);
+});
 
-  </div>
-</div>
+/* ---------- Populate form from record ---------- */
+function populateFromRecord(rec){
+  if(!rec) return;
+  // simple mapping: if value exists, set to matching input
+  Object.entries(fieldsMap).forEach(([inputKey, recKey])=>{
+    const el = document.getElementById(inputKey) || document.getElementById(recKey) || document.getElementById(inputKey);
+    // either element by id inputKey or id recKey
+    const target = document.getElementById(inputKey) || document.getElementById(recKey);
+    if(!target) return;
+    const val = rec[recKey] ?? rec[inputKey] ?? '';
+    if(target.type === 'checkbox') target.checked = Boolean(val);
+    else target.value = val ?? '';
+  });
 
+  // special handling for addresses and nominee
+  if(rec.residentialAddress) document.getElementById('residentialAddress').value = rec.residentialAddress;
+  if(rec.permanentAddress) document.getElementById('permanentAddress').value = rec.permanentAddress;
+  if(rec.nomineeAddress) document.getElementById('nomineeAddress').value = rec.nomineeAddress;
 
+  // regulatory flags
+  if(rec.fatca !== undefined) document.getElementById('fatca').checked = Boolean(rec.fatca);
+  if(rec.crs !== undefined) document.getElementById('crs').checked = Boolean(rec.crs);
+  if(rec.pep !== undefined) document.getElementById('pep').checked = Boolean(rec.pep);
 
-<!-- ALWAYS ACTIVE TABS -->
+  // special conditions
+  if(rec.special){
+    document.getElementById('special_photo').checked = !!rec.special.photo;
+    document.getElementById('special_vis').checked = !!rec.special.visuallyImpaired;
+    document.getElementById('special_deaf').checked = !!rec.special.deaf;
+    document.getElementById('special_locker').checked = !!rec.special.lockerHolder;
+  }
 
-<!-- COMPLIANCE -->
-<div class="panel" id="panel-compliance">
-  <h2 onclick="togglePanel('p5')">Compliance</h2>
-  <div id="p5" class="panel-content hidden">
+  // biometric status
+  if(rec.biometricReVerifiedStatus) document.getElementById('biometricReVerifiedStatus').value = rec.biometricReVerifiedStatus;
+  if(rec.biometricReVerifiedStatus) document.getElementById('biometricStatusText').innerText = rec.biometricReVerifiedStatus;
+}
 
-    <div class="checkbox-row">
-      <input type="checkbox" id="fatca">
-      <label for="fatca">FATCA</label>
-    </div>
+/* ---------- Search dataset when CIF or CNIC entered ---------- */
+function findAndPopulate(){
+  const cifVal = document.getElementById('cif').value.trim();
+  const cnicVal = document.getElementById('cnic').value.trim();
+  if(!dataset || dataset.length === 0) return;
+  const byCif = dataset.find(r => String(r.cif) === cifVal);
+  const byCnic = dataset.find(r => String(r.cnic) === cnicVal || String(r.idNumber) === cnicVal);
+  const rec = byCif || byCnic;
+  if(rec){
+    populateFromRecord(rec);
+    // ensure sections visible according to reasons in record (if any)
+    if(rec.reasons && Array.isArray(rec.reasons)){
+      // mark checkboxes
+      document.querySelectorAll('.ms-opt').forEach(cb=>{
+        cb.checked = rec.reasons.includes(cb.value);
+      });
+      updateVisibleSections();
+    }
+    alert('Record matched and populated.');
+  }
+}
 
-    <div class="checkbox-row">
-      <input type="checkbox" id="pep">
-      <label for="pep">PEP</label>
-    </div>
+/* trigger search after user stops typing */
+let timer;
+[cifInput, cnicInput].forEach(inp=>{
+  inp.addEventListener('input', function(){
+    clearTimeout(timer);
+    timer = setTimeout(findAndPopulate, 700);
+  });
+});
 
-    <div class="checkbox-row">
-      <input type="checkbox" id="crs">
-      <label for="crs">CRS</label>
-    </div>
+/* ---------- Clear & Submit ---------- */
+document.getElementById('clearBtn').addEventListener('click', function(){
+  if(!confirm('Clear the form?')) return;
+  document.querySelectorAll('input, textarea, select').forEach(el=>{
+    if(el.type==='checkbox') el.checked = false;
+    else el.value = '';
+  });
+  // close optional sections
+  document.getElementById('sec-customer').style.display='none';
+  document.getElementById('sec-occupation').style.display='none';
+  document.getElementById('sec-nok').style.display='none';
+  document.getElementById('biometricStatusText').innerText = 'Not Verified';
+});
 
-  </div>
-</div>
+document.getElementById('submitBtn').addEventListener('click', function(){
+  // Simple client-side validation example (required fields)
+  const reasonsSelected = Array.from(document.querySelectorAll('.ms-opt:checked')).length > 0;
+  if(!reasonsSelected){
+    if(!confirm('No reason selected. Continue submission?')) return;
+  }
+  // Compose a minimal payload to show
+  const payload = {
+    cif: document.getElementById('cif').value,
+    cnic: document.getElementById('cnic').value,
+    name: document.getElementById('customerFullName').value,
+    primaryContact: document.getElementById('primaryContactNumber').value
+  };
+  console.log('Submitting payload (demo):', payload);
+  alert('Form submitted (demo). Check console for payload.');
+});
 
-
-<!-- BIOMETRIC -->
-<div class="panel" id="panel-biometric">
-  <h2 onclick="togglePanel('p6')">Biometric Verification</h2>
-  <div id="p6" class="panel-content hidden">
-
-    <div class="form-row">
-      <label>Biometric Status
-        <select id="bioStatus">
-          <option>Verified</option>
-          <option>Not Verified</option>
-          <option>Failed</option>
-        </select>
-      </label>
-
-      <label>Verification Date
-        <input type="date" id="bioDate">
-      </label>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- OTHER / SPECIAL CONDITIONS -->
-<div class="panel" id="panel-other">
-  <h2 onclick="togglePanel('p7')">Other / Special Conditions</h2>
-  <div id="p7" class="panel-content hidden">
-
-    <label>Special Condition (If Any)
-      <textarea id="special" rows="4" style="width:100%"></textarea>
-    </label>
-
-  </div>
-</div>
-
-
-<!-- SUBMIT BUTTON -->
-<div class="submit-area">
-  <button class="btn-submit">Submit Form</button>
-</div>
-
+/* ---------- Initialize: open identification on load ---------- */
+window.addEventListener('DOMContentLoaded', function(){
+  // open identification body (already open by default css)
+  // ensure first panel open
+  document.getElementById('sec-ident-body').classList.add('open');
+});
+</script>
 </body>
 </html>
