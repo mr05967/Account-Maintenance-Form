@@ -1,38 +1,79 @@
 [
   {
-    "cif": "345678",
-    "cnic": "42201-1234567-1",
-    "name": "Ahmed Raza",
-    "father": "Muhammad Raza",
-    "dob": "1994-07-15",
-    "mobile": "0300-1234567",
-    "occupation": "Software Engineer",
-    "employer": "ABC Tech Pvt Ltd",
-    "nok_name": "Ali Raza",
-    "nok_contact": "0311-9876543"
+    "cif": "123456",
+    "cnic": "12345-1234567-1",
+
+    "customerName": "Ali Raza",
+    "fatherName": "Ahmed Raza",
+    "dob": "1990-05-20",
+    "mobile": "03001234567",
+    "email": "ali.raza@example.com",
+    "address": "House 22, PECHS, Karachi",
+
+    "fatca": false,
+    "crs": true,
+    "pep": false,
+
+    "occupationType": "Salaried",
+    "employer": "Habib Bank Ltd",
+    "income": "120000",
+
+    "nokName": "Sara Raza",
+    "nokRelation": "Sister",
+    "nokContact": "03007654321",
+
+    "special": "No special conditions"
   },
+
   {
-    "cif": "987654",
-    "cnic": "42101-9876543-2",
-    "name": "Sara Khan",
-    "father": "Nadeem Khan",
-    "dob": "1998-12-20",
-    "mobile": "0321-5556677",
-    "occupation": "Teacher",
-    "employer": "The City School",
-    "nok_name": "Aisha Khan",
-    "nok_contact": "0302-2233445"
+    "cif": "654321",
+    "cnic": "54321-7654321-2",
+
+    "customerName": "Fatima Khan",
+    "fatherName": "Shahid Khan",
+    "dob": "1985-10-12",
+    "mobile": "03111234567",
+    "email": "fatima.khan@example.com",
+    "address": "Gulshan-e-Iqbal, Karachi",
+
+    "fatca": true,
+    "crs": false,
+    "pep": false,
+
+    "occupationType": "Self Employed",
+    "employer": "Fatima Traders",
+    "income": "250000",
+
+    "nokName": "Ahmed Khan",
+    "nokRelation": "Brother",
+    "nokContact": "03117654321",
+
+    "special": "Customer travels internationally frequently"
   },
-  {
+
+    {
     "cif": "111111",
-    "cnic": "42201-1249486-7",
-    "name": "Mehdi Raza",
-    "father": "Mehboob Ali",
+    "cnic": "42201-1249286-7",
+
+    "customerName": "Mehdi Raza",
+    "fatherName": "Mehboob Ali",
     "dob": "2000-05-17",
-    "mobile": "0332-6676671",
-    "occupation": "Developer",
+    "mobile": "03326676671",
+    "email": "mmr@gmail.com",
+    "address": "Gulshan-e-Iqbal, Karachi",
+
+    "fatca": true,
+    "crs": false,
+    "pep": false,
+
+    "occupationType": "Salaried",
     "employer": "Bank AL Habib Limited",
-    "nok_name": "Ali Khan",
-    "nok_contact": "0302-2233445"
+    "income": "250000",
+
+    "nokName": "Ahmed Khan",
+    "nokRelation": "Brother",
+    "nokContact": "03117654321",
+
+    "special": "Customer travels internationally frequently"
   }
 ]
