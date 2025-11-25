@@ -105,11 +105,13 @@ input, select, textarea {
 .fingerprint-btn {
     background: #0e8c2d;
     color: #fff;
-    padding: 20px;
-    font-size: 16px;
-    border-radius: 50%;
     border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 6px;
     cursor: pointer;
+    margin-right: 10px;
+    transition: 0.2s ease;
 }
 .fingerprint-btn:hover {
     background: #0a5f1d;
