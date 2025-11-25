@@ -1,7 +1,9 @@
 // ---------- Auto-open identification panel on load ----------
 window.addEventListener('DOMContentLoaded', function() {
-    // identification panel is already open via CSS
     console.log("Form ready.");
+
+    // attach button handlers for Identification buttons
+    attachIdentButtons();
 });
 
 // ---------- Toggle sections ----------
@@ -55,7 +57,7 @@ function autoPopulate() {
     fetch("database.json")
     .then(res => res.json())
     .then(data => {
-        const record = data.find(r => r.cnic === cnic || r.cif === cif);
+        const record = data.find(r => r.cnic === cnicInput || r.cif === cifInput);
         if(record) {
             // Customer info
             document.getElementById("customerFullName").value = record.customerName || '';
@@ -120,6 +122,24 @@ let timer;
     });
 });
 
+// ---------- NEW: Identification Buttons Logic ----------
+function attachIdentButtons() {
+    const bioBtn = document.getElementById("identBioBtn");
+    const verBtn = document.getElementById("identVerisysBtn");
+
+    if (!bioBtn || !verBtn) return;
+
+    bioBtn.addEventListener('click', () => {
+        document.getElementById("identBiometricFields").style.display = "block";
+        document.getElementById("identVerisysFields").style.display = "none";
+    });
+
+    verBtn.addEventListener('click', () => {
+        document.getElementById("identBiometricFields").style.display = "none";
+        document.getElementById("identVerisysFields").style.display = "block";
+    });
+}
+
 // ---------- Clear & Submit ----------
 document.getElementById("clearBtn").addEventListener('click', function() {
     if(!confirm("Clear the form?")) return;
@@ -133,6 +153,12 @@ document.getElementById("clearBtn").addEventListener('click', function() {
     document.getElementById("sec-occupation").style.display = 'none';
     document.getElementById("sec-nok").style.display = 'none';
     document.getElementById("biometricStatusText").innerText = 'Not Verified';
+
+    // Also hide identification dynamic fields
+    const b = document.getElementById("identBiometricFields");
+    const v = document.getElementById("identVerisysFields");
+    if(b) b.style.display = "none";
+    if(v) v.style.display = "none";
 });
 
 document.getElementById("submitBtn").addEventListener('click', function() {
