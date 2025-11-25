@@ -47,8 +47,8 @@ document.getElementById("cifInput").addEventListener('input', function() {
 
 // ---------- Auto-populate form from dataset ----------
 function autoPopulate() {
-    const cnic = document.getElementById("cnicInput").value;
-    const cif = document.getElementById("cifInput").value;
+    const cnicInput = document.getElementById("cnicInput").value;
+    const cifInput = document.getElementById("cifInput").value;
 
     if(cnic.length < 15 && cif.length < 6) return;
 
