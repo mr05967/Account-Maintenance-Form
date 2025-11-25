@@ -129,6 +129,16 @@
               <div class="hint">Numeric only — 6 digits</div>
             </div>
 
+            <!-- ID CATEGORY -->
+            <div class="col">
+              <label class="field-label">ID Category</label>
+              <select id="idCategory">
+              <option value="CNIC">CNIC</option>
+              <option value="Passport">Passport</option>
+              <option value="POR">POR</option>
+              </select>
+            </div>
+
             <div class="col">
               <label class="field-label">CNIC / ID Document No. (#####-#######-#)</label>
               <input type="text" id="cnicInput" maxlength="15" placeholder="12345-1234567-1" oninput="formatCNIC(this); autoPopulate();">
@@ -151,6 +161,28 @@
               <label class="ms-item"><input class="ms-opt" type="checkbox" value="Other" />Other Statutory Change</label>
             </div>
           </div>
+
+          <!-- 🔥 NEW BUTTONS BELOW REASONS -->
+    <div class="row" style="margin-top:18px; gap:12px;">
+      <button id="identBioBtn" class="btn-action">Fingerprint / Biometric</button>
+      <button id="identVerisysBtn" class="btn-action">Verisys</button>
+    </div>
+
+    <!-- 🔥 BIOMETRIC FIELDS (HIDDEN INITIALLY) -->
+    <div id="identBiometricFields" style="display:none; margin-top:16px;">
+      <label class="field-label">Biometric Scan Status</label>
+      <input type="text" id="identBioScan" placeholder="Scan pending / Successful / Failed">
+
+      <label class="field-label" style="margin-top:10px;">Scan Result</label>
+      <input type="text" id="identBioResult" placeholder="Match / No Match">
+    </div>
+
+    <!-- 🔥 VERISYS FIELD (HIDDEN INITIALLY) -->
+    <div id="identVerisysFields" style="display:none; margin-top:16px;">
+      <label class="field-label">ID Expiry Date</label>
+      <input type="date" id="identIdExpiry">
+    </div>
+
 
         </div>
       </div>
