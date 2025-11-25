@@ -50,7 +50,7 @@ function autoPopulate() {
     const cnicInput = document.getElementById("cnicInput").value;
     const cifInput = document.getElementById("cifInput").value;
 
-    if(cnic.length < 15 && cif.length < 6) return;
+    if(cnicInput.length < 15 && cifInput.length < 6) return;
 
     fetch("database.json")
     .then(res => res.json())
