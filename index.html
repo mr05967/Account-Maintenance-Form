@@ -130,7 +130,12 @@
             </div>
 
             <div class="col">
-              <label class="field-label">CNIC / ID Document No. (#####-#######-#)</label>
+              <label class="field-label">ID Type</label>
+              <select id="idType"><option value="">Select</option><option value="CNIC">CNIC</option><option value="POR">POR</option><option value="Passport">Passport</option></select>
+            </div>
+
+            <div class="col">
+              <label class="field-label">ID Document No.</label>
               <input type="text" id="cnicInput" maxlength="15" placeholder="12345-1234567-1" oninput="formatCNIC(this); autoPopulate();">
               <div class="hint">Dashes are auto-inserted while typing</div>
             </div>
