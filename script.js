@@ -15,19 +15,19 @@ function toggleSection(id) {
     body.classList.toggle('open');
 }
 
-// ---------- Multi-select handling ----------
+// ---------- Multi-select handling (Shows/Hides the new "Tabs"/Sections) ----------
 function updateVisibleSections() {
     const selected = Array.from(document.querySelectorAll(".ms-opt:checked")).map(cb => cb.value);
 
-    // Show Customer section if any relevant reason is selected
+    // Show Customer section (2. Customer Personal Information & Identity, 3. Customer Contact & Address Information)
     document.getElementById("sec-customer").style.display =
         selected.some(v => ["Periodic", "Customer", "IDExpiry"].includes(v)) ? "block" : "none";
 
-    // Show Occupation section if relevant reason is selected
+    // Show Occupation section (4. Occupation and Financial Profile Update, 5. Know Your Customer)
     document.getElementById("sec-occupation").style.display =
         selected.includes("Occupation") ? "block" : "none";
 
-    // Show Next of Kin section if relevant reason is selected
+    // Show Next of Kin section
     document.getElementById("sec-nok").style.display =
         selected.includes("NextOfKin") ? "block" : "none";
 }
@@ -53,8 +53,6 @@ function formatCIF(input) {
     input.value = onlyDigits(input.value).slice(0,6);
 }
 
-// The oninput listeners are now in the HTML, so we only need the functions here.
-
 // ---------- Auto-populate form from dataset ----------
 function autoPopulate() {
     const cnicInput = document.getElementById("cnicInput").value;
@@ -67,15 +65,7 @@ function autoPopulate() {
     .then(data => {
         const record = data.find(r => r.cnic === cnicInput || r.cif === cifInput);
         if(record) {
-            // === Identification and Review (sec-ident) ===
-            // Assuming the DB has keys that match the existing ones
-            // New fields (can't populate without specific DB keys, using existing data):
-            // document.getElementById("idIssuanceDate").value = record.idIssuanceDate || ''; 
-            // document.getElementById("idExpiryDate").value = record.idExpiryDate || ''; 
-            // document.getElementById("fbrStatus").value = record.fbrStatus || ''; 
-            // document.getElementById("customerRelationshipDate").value = record.relationshipDate || ''; 
-
-            // === Customer Identity, Address & Contact Details (sec-customer) ===
+            // === Existing Fields Population ===
             document.getElementById("customerFullName").value = record.customerName || '';
             document.getElementById("parentSpouseName").value = record.fatherName || '';
             document.getElementById("dateOfBirth").value = record.dob || '';
@@ -83,33 +73,15 @@ function autoPopulate() {
             document.getElementById("emailAddress").value = record.email || '';
             document.getElementById("residentialAddress").value = record.address || '';
             document.getElementById("permanentAddress").value = record.address || '';
-            
-            // Assuming gender can be populated
-            // document.getElementById("gender").value = record.gender || ''; 
+            document.getElementById("occupationType").value = record.occupationType || '';
+            document.getElementById("employerBusinessName").value = record.employer || '';
+            document.getElementById("sourceOfFundsDescription").value = record.income || '';
 
             // Regulatory declarations (Existing)
             document.getElementById("fatca").checked = !!record.fatca;
             document.getElementById("crs").checked = !!record.crs;
             document.getElementById("pep").checked = !!record.pep;
-            // The rest of the new regulatory/status fields will remain unchecked/unpopulated.
-
-            // === Occupation (sec-occupation) ===
-            document.getElementById("occupationType").value = record.occupationType || '';
-            document.getElementById("employerBusinessName").value = record.employer || '';
-            document.getElementById("sourceOfFundsDescription").value = record.income || '';
-
-            // === Next of Kin (sec-nok) ===
-            document.getElementById("nomineeFullName").value = record.nokName || '';
-            document.getElementById("nomineeRelationship").value = record.nokRelation || '';
-            document.getElementById("nomineeContact").value = record.nokContact || '';
-            document.getElementById("nomineeAddress").value = record.address || ''; // Placeholder
-
-            // Special conditions
-            document.getElementById("special_photo").checked = record.special?.includes("Photo") || false;
-            document.getElementById("special_vis").checked = record.special?.includes("Visually") || false;
-            document.getElementById("special_deaf").checked = record.special?.includes("Deaf") || false;
-            document.getElementById("special_locker").checked = record.special?.includes("Locker") || false;
-
+            
             // Biometric status
             if(record.biometricReVerifiedStatus){
                 document.getElementById("biometricReVerifiedStatus").value = record.biometricReVerifiedStatus;
