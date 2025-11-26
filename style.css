@@ -5,7 +5,7 @@
     --muted:#6b6b6b;
     --panel-bg:#ffffff;
     --radius:10px;
-    --gap:16px;
+    --gap:10px; /* Reduced field gap */
 }
 body{
     margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
@@ -21,29 +21,31 @@ body{
 .topbar p{ margin:6px 0 0; opacity:0.95; font-size:13px; }
 
 /* Container */
-.wrap{ max-width:1180px; margin:20px auto; padding:18px; }
-.card{ background:var(--panel-bg); border-radius:var(--radius); box-shadow:0 6px 22px rgba(6,20,10,0.06); padding:20px; }
+.wrap{ max-width:1180px; margin:15px auto; padding:10px; } /* Reduced wrap padding/margin */
+.card{ background:var(--panel-bg); border-radius:var(--radius); box-shadow:0 6px 22px rgba(6,20,10,0.06); padding:16px; } /* Reduced card padding */
 
 /* Accordion/Section Header (The Light Green/Collapsible Look) */
 .section{
-    margin-bottom:12px; border-radius:8px; overflow:hidden; border:1px solid rgba(8,40,12,0.06);
+    margin-bottom:8px; /* Reduced space between sections */
+    border-radius:8px; overflow:hidden; border:1px solid rgba(8,40,12,0.06);
 }
 .section-header{
     background: linear-gradient(180deg, #f7fbf8, #eef7ee);
-    padding:12px 16px; cursor:pointer; display:flex; align-items:center; justify-content:space-between;
+    padding:10px 14px; /* Reduced header padding */
+    cursor:pointer; display:flex; align-items:center; justify-content:space-between;
 }
 .section-header .title{ font-weight:700; color:var(--brand-dark); }
 .section-header .meta{ color:var(--muted); font-size:13px; }
 
-.section-body{ padding:14px 16px; display:none; background:#fff; border-top:1px solid rgba(0,0,0,0.03); }
+.section-body{ padding:12px 16px; /* Reduced body padding */ display:none; background:#fff; border-top:1px solid rgba(0,0,0,0.03); }
 .section-body.open{ display:block; }
 
 /* form layout rows */
-.row{ display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+.row{ display:flex; gap:var(--gap); margin-bottom:8px; /* Reduced space between rows */ flex-wrap:wrap; }
 .col{ flex:1; min-width: 220px; }
-label.field-label{ display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#1f3a1f; }
+label.field-label{ display:block; font-size:13px; font-weight:600; margin-bottom:4px; /* Reduced space above input */ color:#1f3a1f; }
 input[type="text"], input[type="date"], input[type="email"], textarea, select {
-    width:100%; padding:9px 10px; border-radius:8px; border:1px solid #d0d7d0; font-size:14px; background:#fff;
+    width:100%; padding:8px 10px; /* Reduced input padding */ border-radius:8px; border:1px solid #d0d7d0; font-size:14px; background:#fff;
 }
 textarea{ min-height:70px; resize:vertical; }
 
