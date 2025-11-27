@@ -55,19 +55,19 @@ const fields = {
     nomineeAddress: 'nomineeAddress',
     
     // 7. REGULATORY & SPECIAL CONDITIONS
-    fatca: 'fatca', // Checkbox
-    crs: 'crs', // Checkbox
-    pep: 'pep', // Checkbox
+    fatca: 'fatca', 
+    crs: 'crs', 
+    pep: 'pep', 
     pepRelation: 'pepRelation', 
-    nonResident: 'nonResident', // Checkbox
-    zakatExempt: 'zakatExempt', // Checkbox
-    otherNationality: 'otherNationality', // Checkbox
+    nonResident: 'nonResident', 
+    zakatExempt: 'zakatExempt', 
+    otherNationality: 'otherNationality', 
 
     // 8. BIOMETRIC (Output/Status field only)
     biometricReVerifiedStatus: 'biometricReVerifiedStatus',
 
     // 9. STAFF & AUDIT
-    customerReviewed: 'customerReviewed', // Checkbox
+    customerReviewed: 'customerReviewed', 
     docRef_id: 'docRef_id',
     docRef_student: 'docRef_student',
     docRef_income: 'docRef_income',
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById(fields.cnicInput).addEventListener('input', function() { formatCNIC(this); autoPopulate(); });
     document.getElementById(fields.cifInput).addEventListener('input', function() { formatCIF(this); autoPopulate(); });
 
-    // Initial section visibility setup (only Identification is open by default)
+    // Initial section visibility setup
     updateVisibleSections();
 });
 
@@ -140,7 +140,7 @@ function toggleSection(sectionId) {
 /* --- Section Visibility Logic --- */
 
 /**
- * Hides/shows sections based on the selected update reason (Group 1).
+ * Hides/shows sections based on the selected update reason.
  */
 function updateVisibleSections() {
     const reason = document.getElementById(fields.updateReason).value;
@@ -155,7 +155,7 @@ function updateVisibleSections() {
         'Other': [sections.customer, sections.address, sections.occupation, sections.kyc, sections.nok, sections.special, sections.biometric, sections.staff]
     };
 
-    // Get the list of sections to show, defaulting to all compliance/audit sections if reason is not set
+    // Get the list of sections to show, defaulting to compliance/audit sections
     const sectionsToShow = visibilityMap[reason] || [sections.special, sections.biometric, sections.staff]; 
     
     // Iterate through all possible sections and set display style
@@ -183,10 +183,8 @@ function autoPopulate() {
     // --- MOCK DATA SIMULATION ---
     const mockData = {
         '123456': { // Sample CIF for demo
-            // Identification
             'idCategory': 'CNIC',
             'customerFullName': 'AHMED BIN QASIM',
-            // Customer Info (Sec 2)
             'salutation': 'Mr',
             'gender': 'M',
             'motherMaidenName': 'FATIMA ZAHRA',
@@ -196,18 +194,13 @@ function autoPopulate() {
             'idIssuanceDate': '2019-01-01',
             'idExpiryDate': '2029-01-01',
             'fbrStatus': 'ACTIVE TAX PAYER',
-            // Contact (Sec 3)
             'primaryContactNumber': '0300-1234567',
             'residentialAddress': 'House 1A, Street 5, Phase 7, Karachi.',
-            // Occupation (Sec 4)
             'occupationType': 'Salaried',
-            // KYC (Sec 5)
             'sourceOfFundsDescription': 'Salary Income',
             'expectedCreditAmount': '500000',
             'newRiskClassification': 'Medium',
-            // Next of Kin (Sec 6)
             'nomineeFullName': 'AYESHA AHMED',
-            // Biometric (Sec 8)
             'biometricReVerifiedStatus': 'SUCCESS',
             'biometricStatusText': 'Verified'
         }
@@ -221,7 +214,6 @@ function autoPopulate() {
             const element = document.getElementById(fields[key]);
             if (element && data[key] !== undefined) {
                 if (element.type === 'checkbox') {
-                    // Checkboxes based on boolean data (not used much in this mock)
                     element.checked = data[key] === true;
                 } else if (element.tagName === 'SELECT' || element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                     element.value = data[key];
@@ -285,13 +277,12 @@ function handleSubmit() {
         return;
     }
 
-    // You can add more complex field validation here before submission
-
+    // --- SUBMISSION LOGIC ---
     console.log('--- Submitting Form Data to Camunda/Backend ---');
     console.log(JSON.stringify(data, null, 2));
     alert('Form data successfully logged to console for submission. (In a real system, this JSON would be sent to the API.)');
     
-    // Place your actual API call here (e.g., fetch('/api/submit', { method: 'POST', body: JSON.stringify(data) }))
+    // Example: fetch('/api/submit', { method: 'POST', body: JSON.stringify(data) })
 }
 
 /**
@@ -312,7 +303,7 @@ function clearForm() {
         });
         
         // Clear all radio/checkbox groups
-        document.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(el => {
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(el => {
             el.checked = false;
         });
 
