@@ -1,102 +1,385 @@
-:root{
-    --brand-dark:#0a5f1d;
-    --brand:#0e8c2d;
-    --muted:#6b6b6b;
-    --panel-bg:#ffffff;
-    --radius:10px;
-    --gap:16px;
-}
-body{
-    margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-    background: #f3f6f4; color:#111;
-}
+/* -------------------------------------------------------------------------
+   GLOBAL RESET AND VARIABLES
+------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Header */
-.topbar{
-    background: linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);
-    color: #fff; padding:22px 18px; text-align:center;
-}
-.topbar h1{ margin:0; font-size:20px; letter-spacing:0.2px; }
-.topbar p{ margin:6px 0 0; opacity:0.95; font-size:13px; }
+:root {
+    /* Brand/Theme Colors */
+    --brand-primary: #189a3f; /* Deep Green */
+    --brand-secondary: #007bff;
+    --brand-dark: #127931;
+    
+    /* Neutral Colors */
+    --bg-light: #f4f6f9;
+    --bg-white: #ffffff;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --border-light: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.05);
 
-/* container */
-.wrap{ max-width:1180px; margin:20px auto; padding:18px; }
-.card{ background:var(--panel-bg); border-radius:var(--radius); box-shadow:0 6px 22px rgba(6,20,10,0.06); padding:20px; }
-
-/* file loader row (Kept for consistency if needed later) */
-.loader-row{ display:flex; gap:var(--gap); align-items:center; margin-bottom:18px; flex-wrap:wrap; }
-.loader-row label{ font-weight:600; color:var(--muted); }
-
-/* accordion header */
-.section{
-    margin-bottom:12px; border-radius:8px; overflow:hidden; border:1px solid rgba(8,40,12,0.06);
-}
-.section-header{
-    background: linear-gradient(180deg, #f7fbf8, #eef7ee);
-    padding:12px 16px; cursor:pointer; display:flex; align-items:center; justify-content:space-between;
-}
-.section-header .title{ font-weight:700; color:var(--brand-dark); }
-.section-header .meta{ color:var(--muted); font-size:13px; }
-
-.section-body{ padding:14px 16px; display:none; background:#fff; border-top:1px solid rgba(0,0,0,0.03); }
-.section-body.open{ display:block; }
-
-/* form layout rows */
-.row{ display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
-.col{ flex:1; min-width: 220px; }
-label.field-label{ display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#1f3a1f; }
-input[type="text"], input[type="date"], input[type="email"], textarea, select {
-    width:100%; padding:9px 10px; border-radius:8px; border:1px solid #d0d7d0; font-size:14px; background:#fff;
-}
-textarea{ min-height:70px; resize:vertical; }
-
-/* NEW: Grouping for complex inputs (checkboxes/radios) for better visual separation */
-.field-group { 
-    border: 1px solid #e6eee6; 
-    background: #fbfdfb; 
-    padding: 10px; 
-    border-radius: 8px; 
-    margin-top: 8px; 
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 20px;
+    --spacing-lg: 32px;
+    
+    /* Form */
+    --input-padding: 10px 12px;
+    --input-border-radius: 6px;
+    --input-height: 40px;
 }
 
-/* multiselect checkbox list */
-.multiselect{ border:1px solid #e6eee6; background:#fbfdfb; padding:10px; border-radius:8px; display:flex; flex-direction:column; gap:6px; width:320px; }
-.ms-item{ display:flex; gap:8px; align-items:center; }
-.ms-item input[type="checkbox"]{ transform:scale(1.05); margin-left:2px; }
-
-/* checkbox group vertical */
-.vcheck{ display:flex; flex-direction:column; gap:8px; }
-.vcheck label{ display:flex; gap:10px; align-items:center; font-size:14px; color:#1f3a1f; }
-
-/* special condition checkboxes (horizontal list) */
-.special-list{ display:flex; flex-wrap:wrap; gap:12px; }
-
-/* fingerprint button */
-.fingerprint-btn{
-    display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px;
-    border:1px dashed rgba(10,95,29,0.12); background:#f7fbf7; color:var(--brand-dark); cursor:pointer; font-weight:600;
-}
-.fingerprint-ico{
-    width:36px; height:36px; border-radius:8px; display:inline-grid; place-items:center; background:linear-gradient(180deg,#e9f6e9,#ffffff);
-    box-shadow:0 3px 8px rgba(12,60,20,0.06);
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-/* action row */
-.actions{ display:flex; gap:12px; justify-content:flex-end; margin-top:18px; flex-wrap:wrap; }
-.btn{
-    background:var(--brand); color:#fff; padding:10px 16px; border-radius:8px; border:none; cursor:pointer; font-weight:700;
-}
-.btn.ghost{ background:#fff; color:var(--brand); border:1px solid rgba(14,140,45,0.12); }
-
-/* responsive tweaks */
-@media(max-width:880px){
-    .multiselect{ width:100%; }
-    .row{ flex-direction:column; }
-    .vcheck{ flex-direction:column; }
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    padding: 20px 0;
 }
 
-/* subtle form field labels for disabled */
-input[disabled], textarea[disabled] { background:#f4f6f4; color:#6b6b6b; }
+/* -------------------------------------------------------------------------
+   LAYOUT AND CONTAINERS
+------------------------------------------------------------------------- */
 
-/* small helper */
-.hint{ font-size:12px; color:var(--muted); margin-top:6px; }
+.topbar {
+    text-align: center;
+    padding: 0 20px 20px;
+    margin-bottom: 20px;
+}
+
+.topbar h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--brand-dark);
+}
+
+.topbar p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    padding: 0 var(--spacing-md);
+}
+
+.card {
+    background: var(--bg-white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    width: 100%;
+    max-width: 1100px;
+    padding: var(--spacing-lg);
+}
+
+/* -------------------------------------------------------------------------
+   FORM ELEMENTS (INPUTS, LABELS, SELECTS, TEXTAREAS)
+------------------------------------------------------------------------- */
+
+.field-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: var(--input-padding);
+    border: 1px solid var(--border-light);
+    border-radius: var(--input-border-radius);
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: var(--bg-white);
+    height: var(--input-height);
+}
+
+textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 2px rgba(24, 154, 63, 0.2); /* Green focus ring */
+    outline: none;
+}
+
+input:disabled {
+    background-color: #f1f1f1;
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+/* Checkbox and Radio Styling within field-group */
+.field-group {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.field-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-bottom: 0; /* Override field-label margin */
+    font-size: 0.95rem;
+}
+
+/* Vertical Checkbox Group (for Section 1 reasons) */
+.vcheck {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 8px 0;
+}
+
+.vcheck label {
+    margin-bottom: 0;
+}
+
+.h-radio-group {
+    gap: 30px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: auto; /* Revert width for small inputs */
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 3px;
+    accent-color: var(--brand-primary);
+}
+
+.hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+/* -------------------------------------------------------------------------
+   SECTION AND PANEL STYLING (The Core Layout)
+------------------------------------------------------------------------- */
+
+.section {
+    border: 1px solid var(--border-light);
+    border-radius: var(--input-border-radius);
+    margin-bottom: var(--spacing-md);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+
+.section:hover {
+    box-shadow: 0 2px 6px var(--shadow-color);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: #f8fcf9; /* Very light green background */
+    border-bottom: 1px solid var(--border-light);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.section-header:hover {
+    background-color: #eef3f1;
+}
+
+.section-header .title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--brand-dark);
+}
+
+.section-header .meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.section-body {
+    padding: var(--spacing-md);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+}
+
+/* Class applied by JavaScript */
+.section-body.open {
+    max-height: 2000px; /* Large enough value to contain all content */
+    padding: var(--spacing-md);
+}
+
+/* Sub-Headers within Sections */
+.sub-header {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--brand-primary);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* -------------------------------------------------------------------------
+   FLEX GRID FOR ROWS AND COLUMNS
+------------------------------------------------------------------------- */
+
+.row {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.col {
+    flex: 1; /* Default equal flex distribution */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Special List Formatting for Section 7 checkboxes */
+.special-list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 5px 0;
+}
+
+.special-list .ms-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* -------------------------------------------------------------------------
+   BUTTONS AND ACTIONS
+------------------------------------------------------------------------- */
+
+.actions {
+    display: flex;
+    justify-content: flex-end; /* Default align right/end */
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) 0;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--input-border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+}
+
+/* Primary Button (Submit, Biometric Verify) */
+.btn:not(.ghost) {
+    background-color: var(--brand-primary);
+    color: var(--bg-white);
+    box-shadow: 0 2px 4px rgba(24, 154, 63, 0.4);
+}
+
+.btn:not(.ghost):hover {
+    background-color: var(--brand-dark);
+    box-shadow: 0 4px 8px rgba(24, 154, 63, 0.5);
+}
+
+.btn:active {
+    opacity: 0.9;
+    transform: translateY(1px);
+}
+
+/* Ghost Button (Verisys, Clear Form) */
+.btn.ghost {
+    background-color: transparent;
+    color: var(--text-dark);
+    border: 1px solid var(--border-light);
+    box-shadow: none;
+}
+
+.btn.ghost:hover {
+    background-color: #f1f1f1;
+    border-color: var(--text-muted);
+}
+
+/* -------------------------------------------------------------------------
+   RESPONSIVENESS (Mobile First)
+------------------------------------------------------------------------- */
+
+@media (max-width: 992px) {
+    .card {
+        padding: var(--spacing-md);
+    }
+    
+    .row {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .col {
+        /* On mobile, columns take full width */
+        flex: 1 1 100% !important; 
+    }
+    
+    .actions {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .btn {
+        width: 100%;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        padding: var(--spacing-sm);
+    }
+
+    .section-header .title {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1100px) {
+    /* Tablet/Medium screen adjustments */
+    .row {
+        gap: var(--spacing-sm);
+    }
+    .col {
+        /* Allow 2-3 items per row on tablets unless otherwise specified in index.html */
+        flex-basis: calc(50% - var(--spacing-sm) / 2);
+    }
+}
