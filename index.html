@@ -1,439 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer KYC Updation Form</title>
-    <link rel="stylesheet" href="style.css"> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer KYC Updation Form</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="topbar">
-        <h1>Customer KYC Updation Form</h1>
-        <p>Dynamic form for reviewing and updating customer profile data.</p>
-    </div>
+  <div class="topbar">
+    <h1>Customer KYC Updation Form</h1>
+    <p>Dynamic form for reviewing and updating customer profile data.</p>
+  </div>
 
-    <div class="wrap">
-        <div class="card">
-            
-            <div class="section" id="sec-identification">
-                <div class="section-header" onclick="toggleSection('sec-identification')">
-                    <span class="title">1. Identification & Updation Reason</span>
-                    <span class="meta">Mandatory Information</span>
-                </div>
-                <div class="section-body open" id="sec-identification-body">
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">ID Category</label>
-                            <select id="idCategory">
-                                <option value="CNIC">CNIC / NICOP</option>
-                                <option value="Passport">Passport</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label class="field-label">CNIC / ID Number *</label>
-                            <input id="cnicInput" type="text" placeholder="XXXXX-XXXXXXX-X" maxlength="15" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">CIF Number *</label>
-                            <input id="cifInput" type="text" placeholder="6 Digits" maxlength="6" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Reason for Updation *</label>
-                            <select id="updateReason">
-                                <option value="">Select Reason</option>
-                                <option value="PeriodicReview">Periodic Review</option>
-                                <option value="CustomerIdentity">Customer Identity Update</option>
-                                <option value="IDExpiry">ID Expiry/Reissuance</option>
-                                <option value="Occupation">Occupation Update</option>
-                                <option value="NextOfKin">Next of Kin Update</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="btn" onclick="autoPopulate()">Fetch Customer Data (Mock)</button>
-                </div>
+  <div class="wrap">
+    <div class="card">
+
+      <div class="section" id="sec-identification">
+        <div class="section-header" onclick="toggleSection('sec-identification')">
+          <span class="title">1. Identification & Updation Reason</span>
+          <span class="meta">Mandatory Information</span>
+        </div>
+        <div class="section-body open" id="sec-identification-body">
+
+          <div class="row">
+            <div class="col">
+              <label class="field-label">ID Category</label>
+              <select id="idCategory">
+                <option value="CNIC">CNIC / NICOP</option>
+                <option value="Passport">Passport</option>
+              </select>
+            </div>
+            <div class="col">
+              <label class="field-label">CNIC / ID Number *</label>
+              <input id="cnicInput" type="text" placeholder="XXXXX-XXXXXXX-X" maxlength="15" />
             </div>
 
-            <div class="section" id="sec-customer">
-                <div class="section-header" onclick="toggleSection('sec-customer')">
-                    <span class="title">2. Customer Information</span>
-                    <span class="meta">Personal & Demographic Details</span>
-                </div>
-                <div class="section-body" id="sec-customer-body">
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Full Name</label>
-                            <input id="customerFullName" type="text" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Salutation</label>
-                            <select id="salutation">
-                                <option value="">Select</option>
-                                <option>Mr</option>
-                                <option>Ms</option>
-                                <option>Mrs</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Gender</label>
-                            <select id="gender"><option value="">Select</option><option value="M">Male</option><option value="F">Female</option><option value="O">Other</option></select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Mother's Maiden Name</label>
-                            <input id="motherMaidenName" type="text" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Father/Spouse Name</label>
-                            <input id="parentSpouseName" type="text" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Marital Status</label>
-                            <select id="maritalStatus"><option value="">Select</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Date of Birth</label>
-                            <input id="dateOfBirth" type="date" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Place of Birth (Country)</label>
-                            <input id="placeOfBirthCountry" type="text" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Highest Qualification</label>
-                            <select id="qualification">
-                                <option value="">Select</option>
-                                <option>None</option>
-                                <option>Matric/O-Levels</option>
-                                <option>Intermediate/A-Levels</option>
-                                <option>Graduate</option>
-                                <option>Post-Graduate</option>
-                                <option>PhD</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">ID Issuance Date</label>
-                            <input id="idIssuanceDate" type="date" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">ID Expiry Date</label>
-                            <input id="idExpiryDate" type="date" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">FBR Status</label>
-                            <select id="fbrStatus"><option value="">Select</option><option>ACTIVE TAX PAYER</option><option>NON-ACTIVE TAX PAYER</option></select>
-                        </div>
-                    </div>
-                </div>
+            <div
+              style="display: flex; align-items: flex-end; padding-bottom: 8px; font-weight: 700; color: var(--muted);">
+              OR</div>
+
+            <div class="col">
+              <label class="field-label">CIF Number *</label>
+              <input id="cifInput" type="text" placeholder="6 Digits" maxlength="6" />
             </div>
+          </div>
 
-            <div class="section" id="sec-address">
-                <div class="section-header" onclick="toggleSection('sec-address')">
-                    <span class="title">3. Contact & Address Details</span>
-                    <span class="meta">Contact Numbers and Residency</span>
-                </div>
-                <div class="section-body" id="sec-address-body">
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Primary Contact Number</label>
-                            <input id="primaryContactNumber" type="text" placeholder="e.g. 0300-1234567" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Mobile Country (New)</label>
-                            <input id="mobileCountry" type="text" placeholder="e.g. Pakistan" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Telco Company (New)</label>
-                            <input id="telcoCompany" type="text" placeholder="e.g. Jazz/Telenor" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Home/Residence Number</label>
-                            <input id="homeResidenceNumber" type="text" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Tel. Office Number</label>
-                            <input id="telOfficeNumber" type="text" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Email Address</label>
-                            <input id="emailAddress" type="email" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col" style="flex:2;">
-                            <label class="field-label">Residential Address</label>
-                            <textarea id="residentialAddress"></textarea>
-                        </div>
-                        <div class="col" style="flex:2;">
-                            <label class="field-label">Permanent Address</label>
-                            <textarea id="permanentAddress"></textarea>
-                            <div class="hint">Check this if the Residential Address is the same as the Permanent Address.</div>
-                        </div>
-                    </div>
-                </div>
+          <div class="row">
+            <div class="col" style="flex: 3;">
+              <label class="field-label">Reason(s) for Updation (Select one or more) *</label>
+              <div class="special-list">
+                <div class="ms-item"><input type="checkbox" name="updateReasonMulti" id="reasonPeriodic"
+                    value="PeriodicReview" /> <label for="reasonPeriodic">Periodic Review</label></div>
+                <div class="ms-item"><input type="checkbox" name="updateReasonMulti" id="reasonIdentity"
+                    value="CustomerIdentity" /> <label for="reasonIdentity">Customer Identity Update</label></div>
+                <div class="ms-item"><input type="checkbox" name="updateReasonMulti" id="reasonIDExpiry"
+                    value="IDExpiry" /> <label for="reasonIDExpiry">ID Expiry/Reissuance</label></div>
+                <div class="ms-item"><input type="checkbox" name="updateReasonMulti" id="reasonOccupation"
+                    value="Occupation" /> <label for="reasonOccupation">Occupation Update</label></div>
+                <div class="ms-item"><input type="checkbox" name="updateReasonMulti" id="reasonNOK" value="NextOfKin" />
+                  <label for="reasonNOK">Next of Kin Update</label></div>
+                <div class="ms-item"><input type="checkbox" name="updateReasonMulti" id="reasonOther" value="Other" />
+                  <label for="reasonOther">Other</label></div>
+              </div>
             </div>
+          </div>
 
-            <div class="section" id="sec-occupation">
-                <div class="section-header" onclick="toggleSection('sec-occupation')">
-                    <span class="title">4. Occupation Details</span>
-                    <span class="meta">Employment and Business Information</span>
-                </div>
-                <div class="section-body" id="sec-occupation-body">
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Occupation Type</label>
-                            <select id="occupationType"><option value="">Select</option><option>Salaried</option><option>Business Owner</option><option>Self Employed</option><option>Student</option><option>Homemaker</option><option>Retired</option></select>
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Job Title / Designation</label>
-                            <input id="jobTitle" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Employer / Business Name</label>
-                            <input id="employerBusinessName" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col" style="flex:2;">
-                            <label class="field-label">Occupation / Business Address</label>
-                            <textarea id="occupationAddress"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section" id="sec-kyc">
-                <div class="section-header" onclick="toggleSection('sec-kyc')">
-                    <span class="title">5. KYC Profile & Financial Activity</span>
-                    <span class="meta">Source of Funds and Transaction Profile</span>
-                </div>
-                <div class="section-body" id="sec-kyc-body">
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Source of Funds Description *</label>
-                            <input id="sourceOfFundsDescription" type="text" placeholder="e.g. Salary, Business Profit, Rental Income" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Geographical Area of Activity</label>
-                            <input id="geoAreaActivity" type="text" placeholder="e.g. Local, Regional, International" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Monthly Credit Turnover (Amount)*</label>
-                            <input id="expectedCreditAmount" type="text" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">No of Deposit (New)</label>
-                            <select id="noOfDeposit"><option value="">Select</option><option value="1-5">1-5</option><option value="6-10">6-10</option></select>
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Highest Expected Balance (New)</label>
-                            <input id="highestExpectedBalance" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Monthly Debit Turnover (Amount)*</label>
-                            <input id="expectedDebitAmount" type="text" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">No of Withdrawal (New)</label>
-                            <select id="noOfWithdrawal"><option value="">Select</option><option value="1-5">1-5</option><option value="6-10">6-10</option></select>
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Risk Rating Score (New - Read Only)</label>
-                            <input id="riskRatingScore" type="text" disabled placeholder="Auto Calculated" />
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">New Assigned Customer Risk Profile (CRP)*</label>
-                            <select id="newRiskClassification"><option value="">Select</option><option>Low</option><option>Medium</option><option>High</option></select>
-                        </div>
-                        <div class="col" style="flex:2;">
-                            <label class="field-label">Significant Transaction Indicators (New - Radio)</label>
-                            <div class="field-group"> 
-                                <label><input type="radio" name="sigCashTxn" value="Yes" /> Significant Cash Transaction (Yes)</label>
-                                <label><input type="radio" name="sigCashTxn" value="No" /> Significant Cash Transaction (No)</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Expected Type of Counter Parties (New - Checklist)</label>
-                            <div class="field-group">
-                                <div class="vcheck">
-                                    <label><input type="checkbox" name="counterParties" value="FI" /> Financial Institution</label>
-                                    <label><input type="checkbox" name="counterParties" value="BF" /> Business Firm</label>
-                                    <label><input type="checkbox" name="counterParties" value="SE" /> Self Employed</label>
-                                    <label><input type="checkbox" name="counterParties" value="GOV" /> Govt/Semi Gov Entities</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Usual Mode of Transaction (New - Checklist)</label>
-                            <div class="field-group">
-                                <div class="vcheck">
-                                    <label><input type="checkbox" name="txnMode" value="Online" /> Online Banking</label>
-                                    <label><input type="checkbox" name="txnMode" value="LocalWT" /> Local Wire Transfer</label>
-                                    <label><input type="checkbox" name="txnMode" value="ATM" /> ATM Debit Card</label>
-                                    <label><input type="checkbox" name="txnMode" value="Foreign" /> Foreign Remittances</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section" id="sec-nok">
-                <div class="section-header" onclick="toggleSection('sec-nok')">
-                    <span class="title">6. Next of Kin / Nominee Details</span>
-                    <span class="meta">Emergency Contact and Beneficiary Information</span>
-                </div>
-                <div class="section-body" id="sec-nok-body">
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Nominee Tag CIF (Optional)</label>
-                            <input id="nomineeTagCif" type="text" placeholder="Existing Customer CIF" maxlength="6" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Nominee Full Name</label>
-                            <input id="nomineeFullName" type="text" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Relationship to Customer</label>
-                            <select id="nomineeRelationship"><option value="">Select</option><option>Spouse</option><option>Father</option><option>Mother</option><option>Son</option><option>Daughter</option><option>Other</option></select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Nominee CNIC</label>
-                            <input id="nomineeCNIC" type="text" placeholder="XXXXX-XXXXXXX-X" maxlength="15" />
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Nominee Contact Number</label>
-                            <input id="nomineeContact" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col" style="flex:2;">
-                            <label class="field-label">Nominee Address</label>
-                            <textarea id="nomineeAddress"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section" id="sec-special">
-                <div class="section-header" onclick="toggleSection('sec-special')">
-                    <span class="title">7. Regulatory & Special Conditions</span>
-                    <span class="meta">Compliance and Status Flags</span>
-                </div>
-                <div class="section-body" id="sec-special-body">
-                    <div class="row">
-                        <div class="col" style="flex:3;">
-                            <label class="field-label">Regulatory Declarations (Checklist)</label>
-                            <div class="special-list">
-                                <div class="ms-item"><input type="checkbox" id="fatca" name="specialCondition" value="FATCA" /> <label for="fatca">FATCA Affected</label></div>
-                                <div class="ms-item"><input type="checkbox" id="crs" name="specialCondition" value="CRS" /> <label for="crs">CRS Affected</label></div>
-                                <div class="ms-item"><input type="checkbox" id="pep" name="specialCondition" value="PEP" /> <label for="pep">Politically Exposed Person (PEP)</label></div>
-                                <div class="ms-item"><input type="checkbox" id="nonResident" name="specialCondition" value="NonResident" /> <label for="nonResident">Non-Resident Status</label></div>
-                                <div class="ms-item"><input type="checkbox" id="zakatExempt" name="specialCondition" value="ZakatExempt" /> <label for="zakatExempt">Zakat Exempt Status</label></div>
-                                <div class="ms-item"><input type="checkbox" id="otherNationality" name="specialCondition" value="OtherNationality" /> <label for="otherNationality">Other Nationality/Dual Citizenship</label></div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <label class="field-label">If PEP, specify relationship</label>
-                            <input id="pepRelation" type="text" placeholder="e.g. Self, Immediate Family, Associate" />
-                            <div class="hint">Required if PEP is checked above.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section" id="sec-biometric">
-                <div class="section-header" onclick="toggleSection('sec-biometric')">
-                    <span class="title">8. Biometric Verification Status</span>
-                    <span class="meta">NADRA Verification Check</span>
-                </div>
-                <div class="section-body" id="sec-biometric-body">
-                    <div class="row">
-                        <div class="col">
-                            <label class="field-label">Biometric Status</label>
-                            <input id="biometricReVerifiedStatus" type="hidden" value="" />
-                            <p id="biometricStatusText" style="font-weight:700; color:var(--brand-dark);">Not Verified</p>
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Re-Verify Biometrics</label>
-                            <button class="fingerprint-btn">
-                                <span class="fingerprint-ico">👤</span>
-                                Initiate Verification
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section" id="sec-staff">
-                <div class="section-header" onclick="toggleSection('sec-staff')">
-                    <span class="title">9. Staff Certification & Document Reference</span>
-                    <span class="meta">Internal Audit & Compliance</span>
-                </div>
-                <div class="section-body" id="sec-staff-body">
-                    <div class="row">
-                        <div class="col" style="flex:2;">
-                            <label class="field-label">Required Document Reference Codes (New)</label>
-                            <div class="row">
-                                <div class="col">
-                                    <label>ID Document Ref:</label><input id="docRef_id" type="text" />
-                                </div>
-                                <div class="col">
-                                    <label>Student ID Ref:</label><input id="docRef_student" type="text" />
-                                </div>
-                                <div class="col">
-                                    <label>Income Proof Ref:</label><input id="docRef_income" type="text" />
-                                </div>
-                                <div class="col">
-                                    <label>Utility Bill Ref:</label><input id="docRef_utility" type="text" />
-                                </div>
-                                <div class="col">
-                                    <label>Other Doc Ref:</label><input id="docRef_other" type="text" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <label class="field-label">Staff Certification</label>
-                            <div class="field-group">
-                                <label style="display:flex; gap:10px;"><input type="checkbox" id="customerReviewed" /> I certify that the customer has reviewed and confirmed these changes.</label>
-                            </div>
-                            <div class="hint">Mandatory check for submission.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="actions">
-                <button class="btn ghost" id="clearBtn">Clear Form</button>
-                <button class="btn" id="submitBtn">Submit KYC Update</button>
-            </div>
+          <div class="actions" style="justify-content: flex-start; margin-top: 15px;">
+            <button class="btn" style="background: #189a3f;">Verify Biometric</button>
+            <button class="btn ghost" style="color: #189a3f; border-color: rgba(24, 154, 63, 0.5);">Verify
+              Verisys</button>
+            <button class="btn" onclick="autoPopulate()">Fetch Customer Data (Mock)</button>
+          </div>
 
         </div>
-    </div>
+      </div>
 
-    <script src="script.js"></script>
+      <div class="section" id="sec-customer">
+        <div class="section-header" onclick="toggleSection('sec-customer')">
+          <span class="title">2. Customer Information</span>
+          <span class="meta">Personal & Demographic Details</span>
+        </div>
+        <div class="section-body" id="sec-customer-body">
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Full Name</label>
+              <input id="customerFullName" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Salutation</label>
+              <select id="salutation">
+                <option value="">Select</option>
+                <option>Mr</option>
+                <option>Ms</option>
+                <option>Mrs</option>
+              </select>
+            </div>
+            <div class="col">
+              <label class="field-label">Gender</label>
+              <select id="gender">
+                <option value="">Select</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Mother's Maiden Name</label>
+              <input id="motherMaidenName" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Father/Spouse Name</label>
+              <input id="parentSpouseName" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Marital Status</label>
+              <select id="maritalStatus">
+                <option value="">Select</option>
+                <option>Single</option>
+                <option>Married</option>
+                <option>Divorced</option>
+                <option>Widowed</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Date of Birth</label>
+              <input id="dateOfBirth" type="date" />
+            </div>
+            <div class="col">
+              <label class="field-label">Place of Birth (Country)</label>
+              <input id="placeOfBirthCountry" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Highest Qualification</label>
+              <select id="qualification">
+                <option value="">Select</option>
+                <option>None</option>
+                <option>Matric/O-Levels</option>
+                <option>Intermediate/A-Levels</option>
+                <option>Graduate</option>
+                <option>Post-Graduate</option>
+                <option>PhD</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="field-label">ID Issuance Date</label>
+              <input id="idIssuanceDate" type="date" />
+            </div>
+            <div class="col">
+              <label class="field-label">ID Expiry Date</label>
+              <input id="idExpiryDate" type="date" />
+            </div>
+            <div class="col">
+              <label class="field-label">FBR Status</label>
+              <select id="fbrStatus">
+                <option value="">Select</option>
+                <option>ACTIVE TAX PAYER</option>
+                <option>NON-ACTIVE TAX PAYER</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="sec-address">
+        <div class="section-header" onclick="toggleSection('sec-address')">
+          <span class="title">3. Contact & Address Details</span>
+          <span class="meta">Contact Numbers and Residency</span>
+        </div>
+        <div class="section-body" id="sec-address-body">
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Primary Contact Number</label>
+              <input id="primaryContactNumber" type="text" placeholder="e.g. 0300-1234567" />
+            </div>
+            <div class="col">
+              <label class="field-label">Mobile Country (New)</label>
+              <input id="mobileCountry" type="text" placeholder="e.g. Pakistan" />
+            </div>
+            <div class="col">
+              <label class="field-label">Telco Company (New)</label>
+              <input id="telcoCompany" type="text" placeholder="e.g. Jazz/Telenor" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Home/Residence Number</label>
+              <input id="homeResidenceNumber" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Tel. Office Number</label>
+              <input id="telOfficeNumber" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Email Address</label>
+              <input id="emailAddress" type="email" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="flex:2;">
+              <label class="field-label">Residential Address</label>
+              <textarea id="residentialAddress"></textarea>
+            </div>
+            <div class="col" style="flex:2;">
+              <label class="field-label">Permanent Address</label>
+              <textarea id="permanentAddress"></textarea>
+              <div class="hint">Check this if the Residential Address is the same as the Permanent Address.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="sec-occupation">
+        <div class="section-header" onclick="toggleSection('sec-occupation')">
+          <span class="title">4. Occupation Details</span>
+          <span class="meta">Employment and Business Information</span>
+        </div>
+        <div class="section-body" id="sec-occupation-body">
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Occupation Type</label>
+              <select id="occupationType">
+                <option value="">Select</option>
+                <option>Salaried</option>
+                <option>Business Owner</option>
+                <option>Self Employed</option>
+                <option>Student</option>
+                <option>Homemaker</option>
+                <option>Retired</option>
+              </select>
+            </div>
+            <div class="col">
+              <label class="field-label">Job Title / Designation</label>
+              <input id="jobTitle" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Employer / Business Name</label>
+              <input id="employerBusinessName" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="flex:2;">
+              <label class="field-label">Occupation / Business Address</label>
+              <textarea id="occupationAddress"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="sec-kyc">
+        <div class="section-header" onclick="toggleSection('sec-kyc')">
+          <span class="title">5. KYC Profile & Financial Activity</span>
+          <span class="meta">Source of Funds and Transaction Profile</span>
+        </div>
+        <div class="section-body" id="sec-kyc-body">
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Source of Funds Description *</label>
+              <input id="sourceOfFundsDescription" type="text"
+                placeholder="e.g. Salary, Business Profit, Rental Income" />
+            </div>
+            <div class="col">
+              <label class="field-label">Geographical Area of Activity</label>
+              <input id="geoAreaActivity" type="text" placeholder="e.g. Local, Regional, International" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Monthly Credit Turnover (Amount)*</label>
+              <input id="expectedCreditAmount" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">No of Deposit (New)</label>
+              <select id="noOfDeposit">
+                <option value="">Select</option>
+                <option value="1-5">1-5</option>
+                <option value="6-10">6-10</option>
+              </select>
+            </div>
+            <div class="col">
+              <label class="field-label">Highest Expected Balance (New)</label>
+              <input id="highestExpectedBalance" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Monthly Debit Turnover (Amount)*</label>
+              <input id="expectedDebitAmount" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">No of Withdrawal (New)</label>
+              <select id="noOfWithdrawal">
+                <option value="">Select</option>
+                <option value="1-5">1-5</option>
+                <option value="6-10">6-10</option>
+              </select>
+            </div>
+            <div class="col">
+              <label class="field-label">Risk Rating Score (New - Read Only)</label>
+              <input id="riskRatingScore" type="text" disabled placeholder="Auto Calculated" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="field-label">New Assigned Customer Risk Profile (CRP)*</label>
+              <select id="newRiskClassification">
+                <option value="">Select</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div class="col" style="flex:2;">
+              <label class="field-label">Significant Transaction Indicators (New - Radio)</label>
+              <div class="field-group">
+                <label><input type="radio" name="sigCashTxn" value="Yes" /> Significant Cash Transaction (Yes)</label>
+                <label><input type="radio" name="sigCashTxn" value="No" /> Significant Cash Transaction (No)</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Expected Type of Counter Parties (New - Checklist)</label>
+              <div class="field-group">
+                <div class="vcheck">
+                  <label><input type="checkbox" name="counterParties" value="FI" /> Financial Institution</label>
+                  <label><input type="checkbox" name="counterParties" value="BF" /> Business Firm</label>
+                  <label><input type="checkbox" name="counterParties" value="SE" /> Self Employed</label>
+                  <label><input type="checkbox" name="counterParties" value="GOV" /> Govt/Semi Gov Entities</label>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <label class="field-label">Usual Mode of Transaction (New - Checklist)</label>
+              <div class="field-group">
+                <div class="vcheck">
+                  <label><input type="checkbox" name="txnMode" value="Online" /> Online Banking</label>
+                  <label><input type="checkbox" name="txnMode" value="LocalWT" /> Local Wire Transfer</label>
+                  <label><input type="checkbox" name="txnMode" value="ATM" /> ATM Debit Card</label>
+                  <label><input type="checkbox" name="txnMode" value="Foreign" /> Foreign Remittances</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="sec-nok">
+        <div class="section-header" onclick="toggleSection('sec-nok')">
+          <span class="title">6. Next of Kin / Nominee Details</span>
+          <span class="meta">Emergency Contact and Beneficiary Information</span>
+        </div>
+        <div class="section-body" id="sec-nok-body">
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Nominee Tag CIF (Optional)</label>
+              <input id="nomineeTagCif" type="text" placeholder="Existing Customer CIF" maxlength="6" />
+            </div>
+            <div class="col">
+              <label class="field-label">Nominee Full Name</label>
+              <input id="nomineeFullName" type="text" />
+            </div>
+            <div class="col">
+              <label class="field-label">Relationship to Customer</label>
+              <select id="nomineeRelationship">
+                <option value="">Select</option>
+                <option>Spouse</option>
+                <option>Father</option>
+                <option>Mother</option>
+                <option>Son</option>
+                <option>Daughter</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Nominee CNIC</label>
+              <input id="nomineeCNIC" type="text" placeholder="XXXXX-XXXXXXX-X" maxlength="15" />
+            </div>
+            <div class="col">
+              <label class="field-label">Nominee Contact Number</label>
+              <input id="nomineeContact" type="text" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="flex:2;">
+              <label class="field-label">Nominee Address</label>
+              <textarea id="nomineeAddress"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="sec-special">
+        <div class="section-header" onclick="toggleSection('sec-special')">
+          <span class="title">7. Regulatory & Special Conditions</span>
+          <span class="meta">Compliance and Status Flags</span>
+        </div>
+        <div class="section-body" id="sec-special-body">
+          <div class="row">
+            <div class="col" style="flex:3;">
+              <label class="field-label">Regulatory Declarations (Checklist)</label>
+              <div class="special-list">
+                <div class="ms-item"><input type="checkbox" id="fatca" name="specialCondition" value="FATCA" /> <label
+                    for="fatca">FATCA Affected</label></div>
+                <div class="ms-item"><input type="checkbox" id="crs" name="specialCondition" value="CRS" /> <label
+                    for="crs">CRS Affected</label></div>
+                <div class="ms-item"><input type="checkbox" id="pep" name="specialCondition" value="PEP" /> <label
+                    for="pep">Politically Exposed Person (PEP)</label></div>
+                <div class="ms-item"><input type="checkbox" id="nonResident" name="specialCondition"
+                    value="NonResident" /> <label for="nonResident">Non-Resident Status</label></div>
+                <div class="ms-item"><input type="checkbox" id="zakatExempt" name="specialCondition"
+                    value="ZakatExempt" /> <label for="zakatExempt">Zakat Exempt Status</label></div>
+                <div class="ms-item"><input type="checkbox" id="otherNationality" name="specialCondition"
+                    value="OtherNationality" /> <label for="otherNationality">Other Nationality/Dual Citizenship</label>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <label class="field-label">If PEP, specify relationship</label>
+              <input id="pepRelation" type="text" placeholder="e.g. Self, Immediate Family, Associate" />
+              <div class="hint">Required if PEP is checked above.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="sec-biometric">
+        <div class="section-header" onclick="toggleSection('sec-biometric')">
+          <span class="title">8. Biometric Verification Status</span>
+          <span class="meta">NADRA Verification Check</span>
+        </div>
+        <div class="section-body" id="sec-biometric-body">
+          <div class="row">
+            <div class="col">
+              <label class="field-label">Biometric Status</label>
+              <input id="biometricReVerifiedStatus" type="hidden" value="" />
+              <p id="biometricStatusText" style="font-weight:700; color:var(--brand-dark);">Not Verified</p>
+            </div>
+            <div class="col">
+              <label class="field-label">Re-Verify Biometrics</label>
+              <button class="fingerprint-btn">
+                <span class="fingerprint-ico">👤</span>
+                Initiate Verification
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="sec-staff">
+        <div class="section-header" onclick="toggleSection('sec-staff')">
+          <span class="title">9. Staff Certification & Document Reference</span>
+          <span class="meta">Internal Audit & Compliance</span>
+        </div>
+        <div class="section-body" id="sec-staff-body">
+          <div class="row">
+            <div class="col" style="flex:2;">
+              <label class="field-label">Required Document Reference Codes (New)</label>
+              <div class="row">
+                <div class="col">
+                  <label>ID Document Ref:</label><input id="docRef_id" type="text" />
+                </div>
+                <div class="col">
+                  <label>Student ID Ref:</label><input id="docRef_student" type="text" />
+                </div>
+                <div class="col">
+                  <label>Income Proof Ref:</label><input id="docRef_income" type="text" />
+                </div>
+                <div class="col">
+                  <label>Utility Bill Ref:</label><input id="docRef_utility" type="text" />
+                </div>
+                <div class="col">
+                  <label>Other Doc Ref:</label><input id="docRef_other" type="text" />
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <label class="field-label">Staff Certification</label>
+              <div class="field-group">
+                <label style="display:flex; gap:10px;"><input type="checkbox" id="customerReviewed" /> I certify that
+                  the customer has reviewed and confirmed these changes.</label>
+              </div>
+              <div class="hint">Mandatory check for submission.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn ghost" id="clearBtn">Clear Form</button>
+        <button class="btn" id="submitBtn">Submit KYC Update</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 
 </body>
+
 </html>
